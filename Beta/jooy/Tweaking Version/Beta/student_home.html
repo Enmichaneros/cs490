@@ -23,6 +23,7 @@
                         <input type="text" placeholder="UCID" id="UCIDstudent"/>
                         <p id="exam" style="background-color: #ffffff;"></p>
                     </div>
+                    <p id="submitResponse"></p>
                 </div>
              
             </div>
@@ -48,13 +49,13 @@
             {
                 var ucid = document.getElementById('UCIDstudent').value;
                 var code = document.getElementById('myTextArea').value;
-                var testid = document.getElementById('TestIDGetTest').value;
+                var testid = document.getElementById('TestID').value;
                 var qid = document.getElementById('QText').value;
                 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
-                      document.getElementById("content").innerHTML =
+                      document.getElementById("submitResponse").innerHTML =
                       this.responseText;
                     }
                   };
