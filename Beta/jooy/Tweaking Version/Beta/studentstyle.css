@@ -134,3 +134,11 @@ body, html {
   padding-top: 20px;
   background-color: #84CEEB;
 }
+
+.displayexams {
+    display: block;
+}
+
+.takeexam {
+    display: none;
+}
