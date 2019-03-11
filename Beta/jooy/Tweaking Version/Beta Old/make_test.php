@@ -30,9 +30,9 @@
 
     if($output['test_created']=='Yes'){
         print_r('Test Created<br><br>');
-        echo '<input type="text" value="' . $testid . '" id="TestIDQues"/>';
-        echo '<input type="text" placeholder="Question ID" id="QIDQues"/>';
-        echo '<input type="text" placeholder="Number of Points" id="PointsQues"/>';
+        echo '<input type="text" value="' . $testid . '" id="TestID"/>';
+        echo '<input type="text" placeholder="Question ID" id="QID"/>';
+        echo '<input type="text" placeholder="Number of Points" id="Points"/>';
         echo '<input type="button" value="Add Test Question" onclick="addTestQuestion()">';
         echo '<p id="question_content"></p>';
 

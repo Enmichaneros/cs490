@@ -25,7 +25,7 @@
     if($output != "no data"){
         print_r($output);
         echo "<p>Enter the Test ID of the test you want to open</p><br>";
-        echo '<input type="text" placeholder="Test Id" id="TestID"/>';
+        echo '<input type="text" placeholder="Test ID" id="TestIDGetTest"/>';
         echo '<input type="button" value="Open Test" onclick="openTest()">';
 
     }

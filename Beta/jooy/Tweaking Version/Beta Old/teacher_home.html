@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Beta</title>
+        <title>Teacher View</title>
         <link rel="stylesheet" href="teacherstyle.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
@@ -16,7 +16,7 @@
         <div id="Question" class="tabcontent">
             <div class="split left">
               <div class="centered">
-                <h2>Filter Questions</h2>
+                <h2>View Questions</h2>
                 <div class="form">
                     <form class="login-form">
                         <input type="text" placeholder="Diff" id="Diff1"/>
@@ -31,7 +31,7 @@
 
             <div class="split right">
               <div class="centered">
-                <h2>Add Questions</h2>
+                <h2>Add Question</h2>
                 <div class="form">
                     <form class="login-form">
                         <input type="text" placeholder="QID" id="QID"/>
@@ -54,7 +54,7 @@
         <div id="Test" class="tabcontent">
             <div class="split left">
               <div class="centered">
-                <h2>Filter Questions</h2>
+                <h2>View Questions</h2>
                 <div class="form">
                     <form class="login-form">
                         <input type="text" placeholder="Diff" id="Diff2"/>
@@ -69,7 +69,7 @@
 
             <div class="split right">
               <div class="centered">
-                <h2>Make Test</h2>
+                <h2>Generate Test</h2>
                 <div class="form">
                     <form class="login-form">
                         <input type="text" placeholder="Test ID" id="TestID"/>
@@ -89,13 +89,19 @@
               <div class="centered" style="">
                 <h2>View Score</h2>
                 <div class="form">
-                <form class="login-form">
-                    <input type="text" placeholder="TestID" id="TestIDScore"/>
-                    <input type="button" onclick="showScore();" value="Show Available Score" id="availScore"/>
-                </form>
-                <p id="score_content"></p>
-                <p id="change_content"></p>
-            </div>
+                    <form class="question-form">
+                        <input type="text" placeholder="QID" id="QID"/>
+                        <input type="text" placeholder="QText" id="QText"/>
+                        <input type="text" placeholder="TCNum" id="TCNum"/>
+                        <input type="text" placeholder="Input" id="Input"/>
+                        <input type="text" placeholder="Output" id="Output"/>
+                        <input type="text" placeholder="Diff" id="Diff"/>
+                        <input type="text" placeholder="Keyword" id="Keyword"/>
+                        <input type="text" placeholder="Topic" id="Topic"/>
+                        <input type="button" onclick="post();" value="Login" id="login"/>
+                    </form>
+                    <p id="content"></p>
+                </div>
               </div>
             </div>
         </div>
@@ -214,9 +220,9 @@
             
             function addTestQuestion()
             {
-                var TestID = document.getElementById('TestIDQues').value;
-                var QID = document.getElementById('QIDQues').value;
-                var Points = document.getElementById('PointsQues').value;
+                var TestID = document.getElementById('TestID').value;
+                var QID = document.getElementById('QID').value;
+                var Points = document.getElementById('Points').value;
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
@@ -231,48 +237,7 @@
                 xhttp.send("TestID="+TestID+"&QID="+QID+"&Points="+Points);
 
             }            
-            
-            
-            function showScore()
-            {
-                var testid = document.getElementById('TestIDScore').value;
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                      document.getElementById("score_content").innerHTML =
-                      this.responseText;
-                    }
-                  };
-                
-                
-                //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/Beta/scores.php");
-                xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                xhttp.send("TestID="+testid);
 
-            }    
-            
-            function updateResults() {
-                var testid = document.getElementById('TestIDScore').value;
-                var UCID = document.getElementById('UCIDScore').value;
-                var QID = document.getElementById('QIDScore').value;
-                var EarnedPts = document.getElementById('EarnedPtsScore').value;
-                var Comments = document.getElementById('CommentsScore').value;
-
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                      document.getElementById("change_content").innerHTML =
-                      this.responseText;
-                    }
-                  };
-                
-                
-                //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/Beta/update.php");
-                xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                xhttp.send("TestID="+testid+"&UCID="+UCID+"&QID="+QID+"&EarnedPts="+EarnedPts+"&Comments="+Comments);
-            }
             function openPage(pageName, elmnt, color) {
               // Hide all elements with class="tabcontent" by default */
               var i, tabcontent, tablinks;

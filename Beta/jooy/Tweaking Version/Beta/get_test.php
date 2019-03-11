@@ -1,13 +1,13 @@
 <?php
 
     $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
-    
+
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~jj373/Beta/get_test_middle.php';
+    $url = 'https://web.njit.edu/~sk2292/Beta/get_test_middle.php';
     $post_data = array(
-        'TestID' => testid,
+        'TestID' => $testid,
     );
 
     $ch = curl_init();
