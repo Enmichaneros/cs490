@@ -1,11 +1,15 @@
 <?php
-    $testid = $_POST['TestID'];
+    $diff = $_POST['Diff'];
+    $keyword = $_POST['Keyword'];
+    $topic = $_POST['Topic'];
 
     //posting with curl to SQL
 
-    $url = 'https://web.njit.edu/~jj373/Beta/get_test_db.php';
+    $url = 'https://web.njit.edu/~sk2292/Beta/filter_db.php';
     $post_data = array(
-        'TestID' => $testid,
+        'Diff' => $diff,
+        'Keyword' => $keyword,
+        'Topic' => $topic,
     );
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url); // url to send to

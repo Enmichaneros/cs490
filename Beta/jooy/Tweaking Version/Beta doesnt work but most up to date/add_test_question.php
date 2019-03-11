@@ -1,13 +1,17 @@
 <?php
 
     $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
-    
+    $qid = isset($_POST['QID']) ? $_POST['QID'] : '';
+    $points = isset($_POST['Points']) ? $_POST['Points'] : '';
+
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~jj373/Beta/get_test_middle.php';
+    $url = 'https://web.njit.edu/~sk2292/Beta/add_test_question_middle.php';
     $post_data = array(
-        'TestID' => testid,
+        'TestID' => $testid,
+        'QID' => $qid,
+        'Points' => $points,
     );
 
     $ch = curl_init();
@@ -21,7 +25,18 @@
     }
     curl_close($ch); //close curl
 
-    print_r($output);
+
+    $output = json_decode($output,true);
+
+    if($output['atq']=='Yes'){
+        print_r('Test Question Added<br><br>');
+    }
+    elseif($output['atq']=='No'){
+        print_r('Test Question Not Added</br>');
+    }
+    else{
+        print_r('Did not work</br>');
+    }
 
 ?>
 
