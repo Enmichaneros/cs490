@@ -28,7 +28,10 @@
 
         $out .= "<p> Question: $QText </p> <p> Input: $Input </p> <p> Output: $Output </p>";
         $out .= "<textarea id = 'myTextArea' rows = '10' cols = '80'>Write Code Here</textarea> <br><br><br>";
+        $out .= "<input type='button' onclick='sumbit_question_post();' value='Submit Question' id='submitQuestion'/>";
+        
     }
+
 
     print $out;
     print "<br><br>";
