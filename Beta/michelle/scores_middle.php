@@ -3,7 +3,7 @@
 
     //posting with curl to SQL
 
-    $url = 'https://web.njit.edu/~jj373/Beta/get_test_db.php';
+    $url = 'https://web.njit.edu/~sk2292/Beta/scores_db.php';
     $post_data = array(
         'TestID' => $testid,
     );

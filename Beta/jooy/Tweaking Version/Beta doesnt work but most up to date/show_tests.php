@@ -1,13 +1,13 @@
 <?php
 
-    $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
+    $status = isset($_POST['Status']) ? $_POST['Status'] : '';
     
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~jj373/Beta/get_test_middle.php';
+    $url = 'https://web.njit.edu/~sk2292/Beta/show_tests_middle.php';
     $post_data = array(
-        'TestID' => testid,
+        'Status' => $status,
     );
 
     $ch = curl_init();
@@ -21,7 +21,14 @@
     }
     curl_close($ch); //close curl
 
-    print_r($output);
+
+    if($output != "no data"){
+        print_r($output);
+        echo "<p>Enter the Test ID of the test you want to open</p><br>";
+        echo '<input type="text" placeholder="Test Id" id="TestID"/>';
+        echo '<input type="button" value="Open Test" onclick="openTest()">';
+
+    }
 
 ?>
 

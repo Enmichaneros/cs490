@@ -1,11 +1,15 @@
 <?php
     $testid = $_POST['TestID'];
+    $qid = $_POST['QID'];
+    $points = $_POST['Points'];
 
     //posting with curl to SQL
 
-    $url = 'https://web.njit.edu/~jj373/Beta/get_test_db.php';
+    $url = 'https://web.njit.edu/~sk2292/Beta/add_test_question_db.php';
     $post_data = array(
         'TestID' => $testid,
+        'QID' => $qid,
+        'Points' => $points,
     );
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url); // url to send to

@@ -1,6 +1,6 @@
 <?php
 // dummy values, replace with _POST values
-$code = "def function(item):\n\treturn item > 0";
+$code = "def thisfunction(item):\n\treturn item > 0";
 $test_input = array("5", "-2");
 $test_output = array("True", "False"); 
 
@@ -19,7 +19,7 @@ exec('chmod +x test.py');
 $function = explode(':', $code, 2);
 
 // TODO: how to keep track of 'correct' function name?
-$actual = 'def actualfunction(item)';
+$actual = 'def thatfunction(item)';
 
 // wrong function name error
 if ($function[0] != $actual){

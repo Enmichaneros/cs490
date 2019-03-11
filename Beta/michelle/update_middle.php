@@ -1,12 +1,22 @@
 <?php
     $testid = $_POST['TestID'];
+    $ucid = $_POST['UCID'];
+    $qid = $_POST['QID'];
+    $earnedpts = $_POST['EarnedPts'];
+    $comments = $_POST['Comments'];
+
 
     //posting with curl to SQL
 
-    $url = 'https://web.njit.edu/~jj373/Beta/get_test_db.php';
+    $url = 'https://web.njit.edu/~sk2292/Beta/update_db.php';
     $post_data = array(
         'TestID' => $testid,
+        'UCID' => $ucid,
+        'QID' => $qid,
+        'EarnedPts' => $earnedpts,
+        'Comments' => $comments,
     );
+
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url); // url to send to
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //return output instead of printing

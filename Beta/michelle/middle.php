@@ -1,11 +1,14 @@
 <?php
-    $testid = $_POST['TestID'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
     //posting with curl to SQL
 
-    $url = 'https://web.njit.edu/~jj373/Beta/get_test_db.php';
+    //SAILAJA'S VALIDATE.PHP URL IN THE NEXT LINE
+    $url = 'https://web.njit.edu/~sk2292/Beta/validate.php';
     $post_data = array(
-        'TestID' => $testid,
+        'username' => $username,
+        'password' => $password,
     );
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url); // url to send to
@@ -15,7 +18,7 @@
 
     $output = curl_exec($ch); //execute request and fetch response
     if ($output == FALSE){ //check if request successful
-        echo "2cURL error: " . curl_error($ch);
+        echo "cURL error: " . curl_error($ch);
     }
     curl_close($ch); //close curl
 
