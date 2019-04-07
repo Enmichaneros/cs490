@@ -5,7 +5,7 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~sk2292/Beta/scores_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/Beta/scores_middle.php';
     $post_data = array(
         'TestID' => $testid,
     );

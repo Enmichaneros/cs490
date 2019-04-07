@@ -3,7 +3,6 @@
 
     $testid = $_POST['TestID'];
 
-
     ($dbh = mysql_connect ($hostname,$username,$password))
             or die("Unable to connect to MySQL database");
 
@@ -26,8 +25,12 @@
 
 
         $out .= "<p> Question: $QText </p> <p> Input: $Input </p> <p> Output: $Output </p>";
-        $out .= "<code><textarea id = 'myTextArea' rows = '10' cols = '80'>Write Code Here</textarea></code> <br><br><br>";
+        $out .= "<textarea id = 'myTextArea' rows = '10' cols = '80'>Write Code Here</textarea> <br><br><br>";
+        
+        $out .= "<input type='button' onclick='sumbit_question_post();' value='Submit Question' id='submitQuestion'/>";
+        
     }
+
 
     print $out;
     print "<br><br>";

@@ -22,8 +22,9 @@
                     <div class="form">
                         <input type="text" placeholder="UCID" id="UCIDstudent"/>
                         <p id="exam" style="background-color: #ffffff;"></p>
+                        <p id="submitResponse"></p>
                     </div>
-                    <p id="submitResponse"></p>
+                    
                 </div>
              
             </div>
@@ -67,6 +68,25 @@
                 xhttp.send("UCID="+ucid+"&code="+code+"&TestID="+testid+"&QID="+qid);
                 
             }
+            function showStudentScore()
+            {
+                var UCID = document.getElementById('UCIDScore').value;
+                var TestID = document.getElementById('TestIDScore').value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                      document.getElementById("show_scores").innerHTML =
+                      this.responseText;
+                    }
+                  };
+                
+                
+                //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
+                xhttp.open("POST","https://web.njit.edu/~jj373/Beta/student_scores.php");
+                xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                xhttp.send("UCID="+UCID+"&TestID="+TestID);
+
+            } 
             function showTests()
             {
                 var Status = 'Not Taken';
@@ -80,7 +100,7 @@
                 
                 
                 //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/Beta/show_tests.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/Beta/show_tests.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("Status="+Status);
 
@@ -99,30 +119,12 @@
                       this.responseText;
                     }
                   };
-                xhttp.open("POST","https://web.njit.edu/~sk2292/Beta/get_test.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/Beta/get_test.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("TestID="+TestID);
 
             }
-            function showStudentScore()
-            {
-                var UCID = document.getElementById('UCIDScore').value;
-                var TestID = document.getElementById('TestIDScore').value;
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                      document.getElementById("show_scores").innerHTML =
-                      this.responseText;
-                    }
-                  };
-                
-                
-                //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/Beta/student_scores.php");
-                xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                xhttp.send("UCID="+UCID+"&TestID="+TestID);
 
-            } 
             function openPage(pageName, elmnt, color) {
               // Hide all elements with class="tabcontent" by default */
               var i, tabcontent, tablinks;

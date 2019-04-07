@@ -7,7 +7,7 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~sk2292/Beta/add_test_question_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/Beta/add_test_question_middle.php';
     $post_data = array(
         'TestID' => $testid,
         'QID' => $qid,

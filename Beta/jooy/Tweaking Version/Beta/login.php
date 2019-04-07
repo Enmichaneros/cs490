@@ -7,7 +7,7 @@
     //posting with curl
 
     //MICHELLE'S MIDDLE.PHP URL IN THE NEXT LINE 
-    $url = 'https://web.njit.edu/~sk2292/Beta/middle.php';
+    $url = 'https://web.njit.edu/~mbr23/Beta/middle.php';
     $post_data = array(
         'username' => $username,
         'password' => $password,
