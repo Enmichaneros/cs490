@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
 	} else {
         
         //MICHELLE'S MIDDLE.PHP URL IN THE NEXT LINE 
-        $url = 'https://web.njit.edu/~sk2292/RC/login_middle.php';
+        $url = 'https://web.njit.edu/~jj373/RC/login_middle.php';
         $post_data = array(
             'username' => $username,
             'password' => $password,
@@ -38,12 +38,12 @@ if (isset($_POST['submit'])) {
 
         if($output['acctype']=='Student'){
             $_SESSION['username'] = $username;
-            header("Location: ../~sk2292/RC/student_exam.html");
+            header("Location: ../student_exam.php");
             exit();
         }
         else if($output['acctype']=='Teacher'){
             $_SESSION['username'] = $username;
-            header("Location: ../~sk2292/RC/teacher_add_questions.html");
+            header("Location: ../teacher_add_questions.php");
             exit();
         }
         else{
@@ -52,7 +52,8 @@ if (isset($_POST['submit'])) {
         }
 
 	}
+    
 } else {
-	header("Location: ../index.php");
+	header("Location: /index.php");
 	exit();
 }

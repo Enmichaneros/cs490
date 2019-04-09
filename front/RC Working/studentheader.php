@@ -15,9 +15,8 @@
 </head>
 <body>
 	<div class="navbar">
-            <a href="https://web.njit.edu/~sk2292/RC/teacher_add_questions.html">Add Questions</a>
-            <a href="https://web.njit.edu/~sk2292/RC/teacher_make_test.html">Make Test</a>
-            <a href="https://web.njit.edu/~sk2292/RC/teacher_grades.html">Grades</a>
+            <a href="https://web.njit.edu/~sk2292/RC/student_exam.html">Exam</a>
+            <a href="https://web.njit.edu/~sk2292/RC/student_grades.html">Grades</a>
             <?php
                 if (isset($_SESSION['username'])) {
                     echo '<a class = "disabled" disabled>Hello '.$_SESSION["fname"].'</a>';
