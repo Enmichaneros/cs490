@@ -41,14 +41,13 @@
 
     while( $test = mysql_fetch_array($t))
     {
-        $QID =htmlspecialchars($test["QID"]);
-        $QText =htmlspecialchars($test["QText"]);
-        $Points =htmlspecialchars($test["Points"]);
+        $QID =htmlspecialchars($test["TQ.QID"]);
+        $QText =htmlspecialchars($test["Q.QText"]);
+        $Points =htmlspecialchars($test["TQ.Points"]);
 
 
         $out .= "<tr>";
-        $out .= "<td align='center'> $QText </td><td align='center'> 
-        <textarea onkeydown='if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'  '+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}' class='answerCode' id='$QID' rows='50' cols='300' style='width: 600px; height: 300px; resize: none;'></textarea> </td><td align='center'> $Points </td>";
+        $out .= "<td align='center'> $QText </td><td align='center'> <textarea class='answerCode' id='$QID' rows='50' cols='300' style='width: 600px; height: 300px; resize: none;'> </td><td align='center'> $Points </td>";
         $out .= "</tr>";
     }
 

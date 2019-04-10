@@ -187,6 +187,5 @@
                 xhttp.send("QText="+QText+"&FuncName="+FuncName+"&Input="+Input+"&Output="+Output+"&Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic+"&ForLoop="+ForLoop+"&WhileLoop="+WhileLoop+"&Return="+Return+"&Print="+Print);
             }
         </script>
-<?php 
-	include_once 'footer.php';
-?>
+    </body>
+</html>
