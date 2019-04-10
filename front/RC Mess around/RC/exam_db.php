@@ -45,16 +45,31 @@
         $QText =htmlspecialchars($test["QText"]);
         $Points =htmlspecialchars($test["Points"]);
 
-
         $out .= "<tr>";
-        $out .= "<td align='center'> $QText </td><td align='center'> 
-        <textarea onkeydown='if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'  '+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}' class='answerCode' id='$QID' rows='50' cols='300' style='width: 600px; height: 300px; resize: none;'></textarea> </td><td align='center'> $Points </td>";
+        $out .= "<td align='center'> $QText </td><td align='center'><textarea class='answerCode' id='$QID' rows='50' cols='300' style='width: 600px; height: 300px; resize: none;'></textarea> </td><td align='center'> $Points </td>";
         $out .= "</tr>";
     }
 
     $out .= "</table>";
+    print "<script language='javascript' type='text/javascript'>";
+    print "<script>
+            document.getElementById('$QID').addEventListener('keydown',function(event){
+                if(event.code==='Tab'){
+                    var cIndex=this.selectionStart;
+                    this.value=[this.value.slice(0,cIndex),//Slice at cursor index
+                        '\t,                              //Add Tab
+                        this.value.slice(cIndex)].join('');//Join with the end
+                    event.stopPropagation();
+                    event.preventDefault();                //Don't quit the area
+                    this.selectionStart=cIndex+1;
+                    this.selectionEnd=cIndex+1;            //Keep the cursor in the right index
+                }
+            });
+            </script>";
+    print_r "</script>";
+    print_r $out;
+    print_r "<br><br>";
 
-    print $out;
-    print "<br><br>";
+
 
 ?>
