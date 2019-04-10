@@ -51,25 +51,53 @@
     }
 
     $out .= "</table>";
-    print "<script language='javascript' type='text/javascript'>";
-    print "<script>
-            document.getElementById('$QID').addEventListener('keydown',function(event){
-                if(event.code==='Tab'){
-                    var cIndex=this.selectionStart;
-                    this.value=[this.value.slice(0,cIndex),//Slice at cursor index
-                        '\t,                              //Add Tab
-                        this.value.slice(cIndex)].join('');//Join with the end
-                    event.stopPropagation();
-                    event.preventDefault();                //Don't quit the area
-                    this.selectionStart=cIndex+1;
-                    this.selectionEnd=cIndex+1;            //Keep the cursor in the right index
-                }
-            });
-            </script>";
-    print_r "</script>";
-    print_r $out;
-    print_r "<br><br>";
 
-
+    echo $out;
+    echo "<br><br>";
 
 ?>
+
+
+<?php 
+	session_start();
+ ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <body>
+        
+        <script>
+        // listener for tab key in textarea
+           document.addEventListener('keydown',function(e){
+               if(e.target && (e.keyCode == 9)) {
+                   insertTab(document.activeElement, e);
+               }
+           });
+        // function to allow tabs in text area
+            function insertTab(o, e) {
+                var kC = e.keyCode ? e.keyCode : e.charCode ? e.charCode : e.which;
+                if (kC == 9 && !e.shiftKey && !e.ctrlKey && !e.altKey) {
+                    var oS = o.scrollTop;
+                    if (o.setSelectionRange) {
+                        var sS = o.selectionStart;
+                        var sE = o.selectionEnd;
+                        o.value = o.value.substring(0, sS) + "\t" + o.value.substr(sE);
+                        o.setSelectionRange(sS + 1, sS + 1);
+                        o.focus();
+                    } else if (o.createTextRange) {
+                        document.selection.createRange().text = "\t";
+                        e.returnValue = false;
+                    }
+                    o.scrollTop = oS;
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    }
+                    return false;
+                }
+                return true;
+            }
+        </script>
+    </body>
+</html>
+
