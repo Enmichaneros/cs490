@@ -1,6 +1,5 @@
 <?php
 	session_start();
-
     include("db_details.php");
 
     $testid = $_POST['TestID'];
@@ -47,7 +46,7 @@
         
 
         $out .= "<tr>";
-        $out .= "<td align='center'> $QText </td><td align='center'><textarea class='answerCode' id='$QID' rows='50' cols='300' style='width: 600px; height: 300px; resize: none;'></textarea> </td><td align='center'> $Points </td>";
+        $out .= "<td align='center'> $QText </td> <td align='center'> <textarea class='answerCode' id='$QID' rows='50' cols='300' style='width: 600px; height: 300px; resize: none;'></textarea> </td> <td align='center'> $Points </td>";
         $out .= "</tr>";
     }
 
