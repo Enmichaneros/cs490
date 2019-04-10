@@ -38,7 +38,7 @@
         $out .= "</tr>";
     }
     $out .= "</table>";
-    $out .= "<input type='button' value='Open Exam' onclick='openExam()'>";
+    $out .= "<input type='button' class='openExam' value='Open Exam' onclick='openExam()'>";
     print $out;
     print "<br><br>";
 ?>

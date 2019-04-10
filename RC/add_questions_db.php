@@ -39,9 +39,10 @@
     $add_question_nec = "INSERT INTO QUES_NEC (QID, ForLoop, WhileLoop, ReturnStatement, PrintStatement) VALUES ('$QID','$forloop', '$whileloop', '$return', '$print');";
     ( $added_nec = mysql_query( $add_question_nec ) or die (mysql_error()) );
 
-    $inputTC = explode(",", $input);
-    $outputTC = explode(",", $output);
-    for( $i = 0; $i<count($inputTC); $i++ ) {
+    $inputTC = explode("```", $input);
+    $outputTC = explode("```", $output);
+
+    for( $i = 0; $i<count($inputTC)-1; $i++ ) {
         $tcnum = $i;
         $add_question_tc = "INSERT INTO TESTCASES (QID, TCNum, Input, Output) VALUES ('$QID','$tcnum','$inputTC[$i]','$outputTC[$i]');";
         ( $added_tc = mysql_query( $add_question_tc ) or die (mysql_error()) );
@@ -54,6 +55,5 @@
     else{
         echo json_encode(array('added_question' => 'No'));
     }
-
 
 ?>
