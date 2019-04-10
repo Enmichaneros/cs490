@@ -1,9 +1,7 @@
 <?php
     include("db_details.php");
 
-//    $testid = $_POST['TestID'];
-    $testid = '2';
-
+    $testid = $_POST['TestID'];
 
     ($dbh = mysql_connect ($hostname,$username,$password))
             or die("Unable to connect to MySQL database");
@@ -41,13 +39,13 @@
 
     while( $test = mysql_fetch_array($t))
     {
-        $QID =htmlspecialchars($test["TQ.QID"]);
-        $QText =htmlspecialchars($test["Q.QText"]);
-        $Points =htmlspecialchars($test["TQ.Points"]);
-
+        $QID =htmlspecialchars($test["QID"]);
+        $QText =htmlspecialchars($test["QText"]);
+        $Points =htmlspecialchars($test["Points"]);
+        
 
         $out .= "<tr>";
-        $out .= "<td align='center'> $QText </td><td align='center'> <textarea class='answerCode' id='$QID' rows='50' cols='300' style='width: 600px; height: 300px; resize: none;'> </td><td align='center'> $Points </td>";
+        $out .= "<td align='center'> $QText </td> <td align='center'> <textarea class='answerCode' id='$QID' rows='50' cols='300' style='width: 600px; height: 300px; resize: none;'></textarea> </td> <td align='center'> $Points </td>";
         $out .= "</tr>";
     }
 
