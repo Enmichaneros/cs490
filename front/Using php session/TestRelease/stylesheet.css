@@ -1,0 +1,102 @@
+/* Split the screen in half */
+div.content {
+    top: 40px;
+    position: absolute;
+    margin-bottom: 50px;
+}
+
+.split {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    top: 20px;
+}
+
+/* Control the left side */
+.left {
+    left: 0;
+    border-right: 1px solid #A5A5A5;
+}
+
+/* Control the right side */
+.right {
+    right: 0;
+    border-left: 1px solid #A5A5A5;
+}
+
+
+
+/* The navigation bar */
+.navbar {
+    overflow: hidden;
+    background-color: #7BE7BE;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    z-index: 2;
+    border-bottom: 1px solid #7BE7BE;
+    left: 0;
+}
+
+/* Links inside the navbar */
+.navbar a {
+    float: left;
+    display: block;
+    color: #232323;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar p {
+    float: left;
+    display: block;
+    color: #232323;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.form {
+    float: right;
+    display: block;
+    color: #232323;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.button {
+    background-color: #7BE7BE;
+    border: none;
+    color: white;
+    font-size: 16px;
+    float: right;
+    display: block;
+    color: #232323;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar button:hover {
+    background: #A5A5A5;
+    color: white;
+}
+/* Change background on mouse-over */
+.navbar a:hover {
+    background: #A5A5A5;
+    color: white;
+}
+.navbar a.disabled:hover {
+    background: #7BE7BE;
+    color: #232323;
+}
+
+/* Main content */
+.main {
+    margin-top: 30px; /* Add a top margin to avoid content overlay */
+}
