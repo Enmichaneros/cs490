@@ -63,7 +63,7 @@ $testid = $_POST['TestID'];
 
 
 // dummy question_info values
-$code = "def thatfunction(item):\n return item > 0";
+$code = "def thatfunction(item):\nprint(True)";
 // $code = "def thatfunction(item):\n return True";
 // $code = "#hello there and stuff\nprinf(\"True\")";
 $question_info = array(
@@ -147,14 +147,19 @@ foreach ($function as $value) {
 // writing the print function to output results, since the question is only to write the function normally
 $f = explode('def ', $function[0]);
 $function_parts = explode('(', $f[1]);
-$print_string = "\nprint(".$function_parts[0]."(int(sys.argv[1])))";
+// if a function with a return statement
+// $print_string = "\nprint(".$function_parts[0]."(int(sys.argv[1])))";
+
+// if a print string inside a function (shouldn't be)
+$print_string = "\n".$function_parts[0]."(int(sys.argv[1]))";
+
 file_put_contents("test.py", $print_string, FILE_APPEND);
 
 
 //////////////////
 ////////////////// the part where we kinda run the code to test for the other errors bc they're less obvious
 //////////////////
-
+$max_count = 10;
 $count = 10; // number of error iterations so far
 $fixable = true; // to check if it's even possible to fix at all
 $has_errors = false;
@@ -165,7 +170,7 @@ exec('chmod +x error.py');
 $temp = './error.py '.$test_input[0];
 $c = escapeshellcmd($temp);
 $output = shell_exec($c);
-$autograder_comments = $autograder_comments.$output;
+// $autograder_comments = $autograder_comments.$output;
 if (strpos($output, 'Error') != false) {
     // $autograder_comments = $autograder_comments."Detected error... >>>>>>";
     $has_errors = true;
@@ -180,24 +185,25 @@ while ($has_errors && $fixable){
     // $autograder_comments = $autograder_comments."Attempting to deal with error... >>>>>>";
     if (strpos($output, 'Error') != false) {
         // find the line where the error is
-        $output_lines = explode(",", $output);
-        $line = explode("line", $output_lines[1]);
-        // $autograder_comments = $autograder_comments."Offending line: ".$output_lines[1].">>>>";
+        $output_lines = explode("\n", $output);
+        $line = explode("line", $output_lines[0]);
+        // $autograder_comments = $autograder_comments."Offending line: ".$output_lines[0].">>>>";
         $line_number = intval(trim(preg_replace('/[^0-9]/', '', $line[1])));
         // $autograder_comments = $autograder_comments."Offending line number: ".$line_number.">>>>";
 
         $code = file_get_contents("test.py");
-        $autograder_comments = $autograder_comments.$code;
+        // $autograder_comments = $autograder_comments.$code;
         $code_lines = explode("\n", $code);
         $error_line = $code_lines[$line_number-1]; // it starts counting from one
+        // $autograder_comments = $autograder_comments."Offending line: ||".$error_line;
 
         // NameError
         if (strpos($output, 'NameError') != false) {
-            $autograder_comments = $autograder_comments."Detected NameError... >>>>>>";
+            // $autograder_comments = $autograder_comments."Detected NameError... >>>>>>";
             $mistake = trim(explode("(", $error_line)[0]);
-            $autograder_comments = $autograder_comments."Mistake: ".$mistake." on line ".$error_line.">>>>";
+            // $autograder_comments = $autograder_comments."Mistake: ".$mistake." on line ".$error_line.">>>>";
             similar_text("print", $mistake, $percent);
-            $autograder_comments = $autograder_comments."Similarity factor: ".$percent." >>>>";
+            // $autograder_comments = $autograder_comments."Similarity factor: ".$percent." >>>>";
             if ($percent > 0.5){
                 preg_replace($mistake, 'print', $code_lines[$line_number-1]);  // replace the misspelled "print" with the right word
                 $autograder_comments = $autograder_comments."DEDUCT ".($max_points/ 10)." -- function name misspelled, correction attempted\n";
@@ -211,9 +217,10 @@ while ($has_errors && $fixable){
 
         // IndentError
         if (strpos($output, 'IndentationError') != false) {
-            $autograder_comments = $autograder_comments."Detected IndentationError... >>>>>>";
+            // $autograder_comments = $autograder_comments."Detected IndentationError... >>>>>>";
             $indented_string = " ".$error_line;  // it only throws an indent error if there are zero spaces; even one counts as a proper indent apparently
             $code_lines[$line_number-1] = $indented_string;
+            // $autograder_comments = $autograder_comments."New line: ".$indented_string;
             $autograder_comments = $autograder_comments."DEDUCT ".($max_points / 10)." -- incorrect indentation\n";
             $count = $count - 1;            
         }
@@ -227,7 +234,9 @@ while ($has_errors && $fixable){
         }
 
         file_put_contents("test.py", ""); // first input nothing, to rewrite the file (I'm pretty sure this works)
+        // $autograder_comments = $autograder_comments."Rewritten Code: ||||";
         foreach ($code_lines as $line) { // then rewrite each line from the code, including the edited one (theoretically)
+            // $autograder_comments = $autograder_comments.$line;
             file_put_contents("test.py", $line."\n", FILE_APPEND);
         }
         
@@ -236,7 +245,7 @@ while ($has_errors && $fixable){
     }
     else {
         $has_errors = false;
-        $total_points = max(($total_points - ( 5 * $count)), 0); // deduct points, if that's too many then set to 0.
+        $total_points = max(($total_points - ( 5 * ($max_count - $count))), 0); // deduct points, if that's too many then set to 0.
     }
 }
 
@@ -298,7 +307,7 @@ $url = 'https://web.njit.edu/~sk2292/Beta/add_results_db.php';
 // send something back to front-end -- success/failure maybe? idk
 // echo 'Success';
 
-echo "Total points: ".$total_points."/".$max_points.$autograder_comments;
+echo "Total points: ".$total_points."/".$max_points."   ".$autograder_comments;
 
 // dummy return value
 ?>
