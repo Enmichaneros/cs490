@@ -1,15 +1,7 @@
-<html>
-    <head>
-        <title>RC</title>
-        <link rel="stylesheet" href="stylesheet.css">
-    </head>
-    <body>
-        <div class="navbar">
-            <a href="https://web.njit.edu/~sk2292/RC/teacher_add_questions.html">Add Questions</a>
-            <a href="https://web.njit.edu/~sk2292/RC/teacher_make_test.html">Make Test</a>
-            <a href="https://web.njit.edu/~sk2292/RC/teacher_grades.html">Grades</a>
-            <a href="https://web.njit.edu/~sk2292/RC/index.html" style="float: right;">Log Out</a>
-        </div>
+<?php 
+	include_once 'teacherheader.php';
+ ?>
+
         <div class="content">
             <div class="split left">
                 <h2 style="margin-left: 10px;">Filter Questions</h2>
@@ -59,7 +51,7 @@
                 <h2 style="margin-left: 10px;">Make Test</h2>
                 <div>
                     
-                    <p style="text-align: center; display: inline; padding-left: 200px;">Test Name: </p><input style="display: inline;" type="text" placeholder="Test Name" id="testName_makeTest"/>
+                    <p style="text-align: center; display: inline; padding-left: 200px;">Test Name: </p><input style="display: inline;" type="text" placeholder="Function Name" id="testName_makeTest"/>
                     
                     <p id="test_questions_content" style="margin-bottom: 20px; padding-right: 10px; padding-left: 10px;"></p>
                     <p style="margin-left: 475px; display: inline;">Total Points: &nbsp;</p><p id="points_content" style="display: inline; margin-bottom: 10px;" value="0"></p>
@@ -170,5 +162,7 @@
 
             }
         </script>
+<!--
     </body>
 </html>
+-->

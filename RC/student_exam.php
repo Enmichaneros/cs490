@@ -1,14 +1,7 @@
-<html>
-    <head>
-        <title>RC</title>
-        <link rel="stylesheet" href="stylesheet.css">
-    </head>
-    <body>
-        <div class="navbar">
-            <a href="https://web.njit.edu/~sk2292/RC/student_exam.html">Exam</a>
-            <a href="https://web.njit.edu/~sk2292/RC/student_grades.html">Grades</a>
-            <a href="https://web.njit.edu/~sk2292/RC/index.html" style="float: right;">Log Out</a>
-        </div>
+<?php 
+	include_once 'studentheader.php';
+ ?>
+
         
         <div id="Exam" class = "content">
             <h2>Take Exam</h2>
@@ -72,5 +65,7 @@
 
             }
         </script>
+<!--
     </body>
 </html>
+-->
