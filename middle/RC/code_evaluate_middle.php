@@ -11,7 +11,7 @@ $answers = explode('```',  $_POST['code']);
 // explode and then create 
 
 // TODO: php file that connects to backend and retrieves questions, in order of QID
-$url = "https://web.njit.edu/~sk2292/Beta/get_questions_db.php"
+$url = "https://web.njit.edu/~mbr23/RC/get_test_qids_db.php"
 $post_data = array(
     'ucid' => $ucid,
     'TestID' => $testid,
@@ -34,8 +34,7 @@ $question_ids = explode(',', $questions);
 ////////////////////////////////////////////
 //////////////////////////////////////////// beginning of for loop for questions
 ////////////////////////////////////////////
-// for (length of question_ids)
-// foreach ($answers as $code) {
+
 for ($q = 0; $q < sizeof($answers); $q++){
     // dummy question_info values
     // $code = "def thatfunction(item):\nprint(True)";
@@ -54,7 +53,7 @@ for ($q = 0; $q < sizeof($answers); $q++){
 
     // grab the values from the database
     // TODO: check correct posting format
-    $url = 'https://web.njit.edu/~sk2292/Beta/get_testcases_db.php';
+    $url = 'https://web.njit.edu/~sk2292/RC/get_testcases_db.php';
     $post_data = array(
         'QID' => $qid,
         'TestID' => $testid,
@@ -123,10 +122,6 @@ for ($q = 0; $q < sizeof($answers); $q++){
             $autograder_comments = $autograder_comments."FLAG -- Does not contain for loop when specified\n";
         } 
     }
-
-    //////////////////
-    ////////////////// print syntax error (naive implementation)
-    //////////////////
 
     //////////////////
     ////////////////// TODO: switch if code uses for and if uses print
