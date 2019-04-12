@@ -11,9 +11,8 @@ $answers = explode('```',  $_POST['code']);
 // explode and then create 
 
 // TODO: php file that connects to backend and retrieves questions, in order of QID
-$url = "https://web.njit.edu/~mbr23/RC/get_test_qids_db.php"
+$url = "https://web.njit.edu/~sk2292/RC/get_test_qids_db.php"
 $post_data = array(
-    'ucid' => $ucid,
     'TestID' => $testid,
 );
 $ch = curl_init();
