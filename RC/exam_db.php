@@ -24,7 +24,8 @@
 
 
     $out = "";
-    $out .= "<p id='exam_info' name='$TestID'> Test: $TestName </p><p>Total Points: $TotalPoints</p>";
+
+    $out .= "<p id='$TestID' class='exam_info'> Test: $TestName </p><p>Total Points: $TotalPoints</p>";
 
     $out .= "<style> table, th, caption{margin:auto;} </style>";
     $out .= "<style>th{background : #ffffff ;}</style>";
