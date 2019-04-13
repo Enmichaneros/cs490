@@ -80,7 +80,6 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     $max_points = intval($question_info['points']);
     $total_points = intval($question_info['points']);
     
-    echo $total_points;
 
     $point_decrement = $total_points / sizeof($test_input);
     $uses_for = $question_info['for'];
@@ -118,7 +117,6 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     }
     else{ $function[0] = $function[0].":"; }
 
-    echo $total_points;
 
     //////////////////
     ////////////////// for loop error (naive implementation)

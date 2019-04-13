@@ -1,12 +1,12 @@
 <?php
-    $code = $_POST['Code'];
+//    $code = $_POST['Code'];
 
     //posting with curl to SQL
 
-    $url = 'https://web.njit.edu/~sk2292/RC/submit_test_db.php';
-    $post_data = array(
-        'Code' => $code,
-    );
+    $url = 'https://web.njit.edu/~sk2292/RC/teacher_get_grades_db.php';
+//    $post_data = array(
+//        'Code' => $code,
+//    );
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url); // url to send to
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //return output instead of printing
