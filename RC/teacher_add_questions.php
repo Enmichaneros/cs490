@@ -163,16 +163,16 @@
                 var WhileLoop = document.getElementById('whileloopNec').checked;
                 var Return = document.getElementById('returnNec').checked;
                 var Print = document.getElementById('printNec').checked;
-                var Input = [];
-                var Output = [];
+                var Input = "";
+                var Output = "";
                 for (var i = 0; i <= testcaseNum; ++i) {
                     var inp = "input"+i;
                     var out = "output"+i;
-                    Input[i] = document.getElementById(inp).value;
-                    Output[i] = document.getElementById(out).value;
+                    Input += document.getElementById(inp).value + "```";
+                    Output += document.getElementById(out).value + "```";
 
                 }
-//                document.getElementById("add_question_content").innerHTML = ForLoop;
+//                document.getElementById("add_question_content").innerHTML = Input;
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {

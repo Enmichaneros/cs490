@@ -7,21 +7,6 @@
     $earnedpts = explode("```", $_POST['EarnedPts']);
     $comments = explode("```", $_POST['Comments']);
 
-//
-//    $ucid = 'sk2292';
-//    $testid = '2';
-//    $qid = "1```40```42";
-//    $earnedpts = "10```20```10";
-//    $comments = "DEDUCT 0 -- incorrect function name
-//Detected SyntaxError... >>>>>>ERROR -- Unable to automatically fix syntax errors, manual grading may be required
-//DEDUCT 0 -- Test Case #0 did not work successfully. Expected: { || Actual: 
-//```DEDUCT 0 -- incorrect function name
-//Detected SyntaxError... >>>>>>ERROR -- Unable to automatically fix syntax errors, manual grading may be required
-//DEDUCT 0 -- Test Case #0 did not work successfully. Expected: { || Actual: 
-//```DEDUCT 0 -- incorrect function name
-//Detected SyntaxError... >>>>>>ERROR -- Unable to automatically fix syntax errors, manual grading may be required
-//DEDUCT 0 -- Test Case #0 did not work successfully. Expected: { || Actual: 
-//";
 
     ($dbh = mysql_connect ($hostname,$username,$password))
             or die("Unable to connect to MySQL database");

@@ -44,19 +44,19 @@
     curl_close($ch); //close curl
 
 
-    echo $output;
+//    echo $output;
 
-//    $output = json_decode($output,true);
-//
-//    if($output['added_question']=='Yes'){
-//        print_r('Added</br>');
-//    }
-//    elseif($output['added_question']=='No'){
-//        print_r('Not Added</br>');
-//    }
-//    else{
-//        print_r('Did not work</br>');
-//    }
+    $output = json_decode($output,true);
+
+    if($output['added_question']=='Yes'){
+        print_r('Added</br>');
+    }
+    elseif($output['added_question']=='No'){
+        print_r('Not Added</br>');
+    }
+    else{
+        print_r('Did not work</br>');
+    }
 ?>
 
 

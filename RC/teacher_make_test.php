@@ -41,7 +41,7 @@
                     </div>
                     <input style="text-align: center;" type="button" onclick="filter_post();" value="Filter" id="filter"/>
                 </div>
-                <div>
+                <div style='padding-bottom: 100px;'>
                     <p id="filter_content" style="padding-right: 10px; padding-left: 10px;"></p>
                     <input type="button" onclick="addTestQuestion();" value="Add Question to Test ->" id="addTestQues_button">
                 </div>
@@ -49,7 +49,7 @@
 
             <div class="split right">
                 <h2 style="margin-left: 10px;">Make Test</h2>
-                <div>
+                <div style='padding-bottom: 100px;'>
                     
                     <p style="text-align: center; display: inline; padding-left: 200px;">Test Name: </p><input style="display: inline;" type="text" placeholder="Function Name" id="testName_makeTest"/>
                     
