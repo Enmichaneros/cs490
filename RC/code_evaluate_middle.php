@@ -1,39 +1,8 @@
 <?php
 $ucid = $_POST['UCID'];
-// $code = $_POST['code']; // will be a string separated by '```'
 $testid = $_POST['TestID'];
 $question_ids = explode('```',  $_POST['QID']);
 $answers = explode('```',  $_POST['Code']);
-
-
-
-//echo $ucid . "<br>" . $testid . "<br>" . $question_ids . "<br>" . $answers . "<br>";
-
-
-// inputs are put into one string
-// outputs are put into one string
-// split by comma
-// explode and then create 
-
-// TODO: php file that connects to backend and retrieves questions, in order of QID
-//$url = "https://web.njit.edu/~sk2292/RC/get_test_qids_db.php"
-//$post_data = array(
-//    'TestID' => $testid,
-//);
-//$ch = curl_init();
-//curl_setopt($ch, CURLOPT_URL, $url); // url to send to
-//curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //return output instead of printing
-//curl_setopt($ch, CURLOPT_POST, 1); //posting
-//curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
-//
-//$output = curl_exec($ch); //execute request and fetch response
-//if ($output == FALSE){ //check if request successful
-//    echo "cURL error: " . curl_error($ch);
-//}
-//curl_close($ch); //close curl
-//
-//$questions = $output['questions'];
-//$question_ids = explode(',', $questions);
 
 ////////////////////////////////////////////
 //////////////////////////////////////////// beginning of for loop for questions
@@ -41,16 +10,17 @@ $answers = explode('```',  $_POST['Code']);
 
 for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     // dummy question_info values
-     $code = "def thatfunction(item):\nprint(True)";
-//     $question_info = array(
-//         'input' => '1```-7',
-//         'output' => 'True```False',
-//         'points' => '50',
-//         'for' => False,
-//         'print' => False,
-//         'return' => False,
-//         'while' => False,
-//     );
+     // $code = "def thatfunction(item):\nprint(True)";
+    // $question_info = array(
+    //     'input' => '1```-7',
+    //     'output' => 'True```False',
+    //     'points' => '100',
+    //     'for' => 'false',
+    //     'print' => 'false',
+    //     'return' => 'true',
+    //     'while' => 'false',
+    //     'function' => 'thatfunction(n)',
+    // );
 
     $code = $answers[$q];
     $qid = $question_ids[$q];
@@ -68,20 +38,21 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     curl_setopt($ch, CURLOPT_POST, 1); //posting
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
 
-    $question_info = curl_exec($ch); //execute request and fetch response
-    if ($question_info == FALSE){ //check if request successful
+    $output = curl_exec($ch); //execute request and fetch response
+    if ($output == FALSE){ //check if request successful
         echo "1cURL error: " . curl_error($ch);
     }
     curl_close($ch); //close curl
 
-    // TODO: these will be comma separated values
+    $question_info = json_decode($output, true);
+
     $test_input = explode('```', $question_info['input']);
     $test_output = explode('```', $question_info['output']);
     $max_points = intval($question_info['points']);
     $total_points = intval($question_info['points']);
     
 
-    $point_decrement = $total_points / sizeof($test_input);
+    $point_decrement = $total_points / (sizeof($test_input) - 1);
     $uses_for = $question_info['for'];
     $uses_while = $question_info['while'];
     $uses_print = $question_info['print'];
@@ -97,6 +68,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     ////////////////////////////////////////////
 
     // for errors detected by autograder, so the teacher knows why points were deducted
+    // $autograder_comments = "";
     $autograder_comments = "";
 
     //////////////////
@@ -107,11 +79,13 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
     // TODO: retrieve actual intended function name from somewhere
     $function_name = $question_info['function'];
+    // dummy value
+    // $function_name = "thatfunction(n)";
     $actual = 'def '.$function_name;
 
     // $autograder_comments = $autograder_comments."Testing function name... >>>>>>";
     if ($function[0] != $actual){
-        $total_points = $total_points - ($point_decrement / 10);
+        $total_points = $total_points - ($point_decrement / 2);
         $autograder_comments = $autograder_comments."DEDUCT ".($max_points / 10)." -- incorrect function name\n";
         $function[0] = $actual.":";
     }
@@ -141,7 +115,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     $f = explode('def ', $function[0]);
     $function_parts = explode('(', $f[1]);
 
-    if ($uses_for == 'true'){ $print_string = "\nprint(".$function_parts[0]."(int(sys.argv[1])))"; }
+    if ($uses_return == 'true'){ $print_string = "\nprint(".$function_parts[0]."(int(sys.argv[1])))"; }
     else if ($uses_print == 'true') { $print_string = "\n".$function_parts[0]."(int(sys.argv[1]))"; }
     else { $print_string = ""; }
     file_put_contents("test.py", $print_string, FILE_APPEND);
@@ -181,7 +155,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
                 similar_text("print", $mistake, $percent);
                 if ($percent > 0.5){
                     preg_replace($mistake, 'print', $code_lines[$line_number-1]);  // replace the misspelled "print" with the right word
-                    $autograder_comments = $autograder_comments."DEDUCT ".($max_points/ 10)." -- function name misspelled, correction attempted\n";
+                    $autograder_comments = $autograder_comments."LINE ".$line_number." -- DEDUCT ".($max_points/ 10)." -- function name misspelled, correction attempted\n";
                     $count = $count - 1;
                 } // TODO: other common functions that could be misspelled
                 else{  // else, it's unfixable and we don't know what they were trying to say.
@@ -195,7 +169,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
                 $indented_string = " ".$error_line;  // it only throws an indent error if there are zero spaces; even one counts as a proper indent apparently
                 $code_lines[$line_number-1] = $indented_string;
                 // $autograder_comments = $autograder_comments."New line: ".$indented_string;
-                $autograder_comments = $autograder_comments."DEDUCT ".($max_points / 10)." -- incorrect indentation\n";
+                $autograder_comments = $autograder_comments."LINE ".$line_number." -- DEDUCT ".($max_points / 10)." -- incorrect indentation\n";
                 $count = $count - 1;            
             }
 
@@ -250,12 +224,6 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     //////////////////////////////////////////// End autograder
     ////////////////////////////////////////////
 
-
-    // submitting results back to database
-    // TODO: this part **should** largely remain the same, shouldn't have to change
-    // actually since we add the questions to the database, will need to see how that's formatted too
-    // the important part, of course, is to make sure the error checking works for one question
-    // then we can scale! yay!
     $url = 'https://web.njit.edu/~sk2292/RC/add_results_db.php';
 
     // TODO: I'm pretty sure that if I just send multiple post requests it should work.
@@ -268,7 +236,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
         'QID' => $qid,
         'TestID' => $testid,
         'EarnedPts' => $total_points,
-        'AnsText' => $code, // the original code, not the one used to run the test cases
+        'AnsText' => file_get_contents('test.py'), // the original code, not the one used to run the test cases
         'Comments' => $autograder_comments,
     );
 //    $post_data = array(
@@ -301,7 +269,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 // send something back to front-end -- success/failure maybe? idk
 // echo 'Success';
 // dummy return value
-//echo "Total points: ".$total_points."/".$max_points."   ".$autograder_comments;
+// echo "Total points: ".$total_points."/".$max_points."   ".$autograder_comments;
 echo "Submitted";
 
 ?>
