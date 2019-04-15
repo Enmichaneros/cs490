@@ -1,69 +1,31 @@
 <?php
 $ucid = $_POST['UCID'];
-// $code = $_POST['code']; // will be a string separated by '```'
 $testid = $_POST['TestID'];
 $question_ids = explode('```',  $_POST['QID']);
 $answers = explode('```',  $_POST['Code']);
-//$ucid = 'sk2292';
-//$testid = '10';
-//$question_ids = explode('```',  "75```76```77```");
-//$answers = explode('```',  "def countArticles():
-//	return("5')```def vowelUseDict():
-//	return("5")```def importantWords():
-//	return("5")```");
-
-
-//echo $ucid . "<br>" . $testid . "<br>" . $question_ids . "<br>" . $answers . "<br>";
-
-
-// inputs are put into one string
-// outputs are put into one string
-// split by comma
-// explode and then create 
-
-// TODO: php file that connects to backend and retrieves questions, in order of QID
-//$url = "https://web.njit.edu/~sk2292/RC/get_test_qids_db.php"
-//$post_data = array(
-//    'TestID' => $testid,
-//);
-//$ch = curl_init();
-//curl_setopt($ch, CURLOPT_URL, $url); // url to send to
-//curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //return output instead of printing
-//curl_setopt($ch, CURLOPT_POST, 1); //posting
-//curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
-//
-//$output = curl_exec($ch); //execute request and fetch response
-//if ($output == FALSE){ //check if request successful
-//    echo "cURL error: " . curl_error($ch);
-//}
-//curl_close($ch); //close curl
-//
-//$questions = $output['questions'];
-//$question_ids = explode(',', $questions);
 
 ////////////////////////////////////////////
 //////////////////////////////////////////// beginning of for loop for questions
 ////////////////////////////////////////////
 
 for ($q = 0; $q < sizeof($question_ids)-1; $q++){
-    // dummy question_info values
-//     $code = "def thatfunction(item):\nprint(True)";
-//     $question_info = array(
-//         'input' => '1```-7',
-//         'output' => 'True```False',
-//         'points' => '50',
-//         'for' => False,
-//         'print' => False,
-//         'return' => False,
-//         'while' => False,
-//     );
+    // dummy values
+    // $code = "def thatfunction(item):\nprint(True)";
+    // $question_info = array(
+    //     'input' => '1```-7',
+    //     'output' => 'True```False',
+    //     'points' => '100',
+    //     'for' => 'false',
+    //     'print' => 'false',
+    //     'return' => 'true',
+    //     'while' => 'false',
+    //     'function' => 'thatfunction(n)',
+    // );
 
     $code = $answers[$q];
+    $original_code = $answers[$q];
     $qid = $question_ids[$q];
-    
-//    echo "code: ".$code."<br>";
-//    echo "qid: ".$qid."<br>";
-    
+
     // grab the values from the database
     // TODO: check correct posting format
     $url = 'https://web.njit.edu/~sk2292/RC/get_testcases_db.php';
@@ -77,38 +39,28 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     curl_setopt($ch, CURLOPT_POST, 1); //posting
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
 
-    $question_info = curl_exec($ch); //execute request and fetch response
-    if ($question_info == FALSE){ //check if request successful
+    $output = curl_exec($ch); //execute request and fetch response
+    if ($output == FALSE){ //check if request successful
         echo "1cURL error: " . curl_error($ch);
     }
     curl_close($ch); //close curl
-    
-    $question_info = json_decode($question_info,true);
 
-    // TODO: these will be comma separated values
+    $question_info = json_decode($output, true);
+
     $test_input = explode('```', $question_info['input']);
     $test_output = explode('```', $question_info['output']);
     $max_points = intval($question_info['points']);
     $total_points = intval($question_info['points']);
     
-//    echo "size of test input: ".$question_info['input']."<br>";
-//    echo "size of test output: ".$question_info['output']."<br>";
-//    echo "max points: ".strval($max_points)."<br>";
 
-
-    $point_decrement = $total_points / sizeof($test_input);
+    $point_decrement = $total_points / (sizeof($test_input) - 1);
     $uses_for = $question_info['for'];
     $uses_while = $question_info['while'];
     $uses_print = $question_info['print'];
     $uses_return = $question_info['return'];
-    
-//    echo "for: ".$uses_for."<br>";
-//    echo "while: ".$uses_while."<br>";
-//    echo "print: ".$uses_print."<br>";
-//    echo "return: ".$uses_return."<br>";
-
 
     // writing the file and making it executable, hosted onto my personal njit server, so is a local file
+    // reminder: in a new folder you need to write "fs setacl ~/public_html/target_dir http write"
     $c = 'echo \'#!/usr/bin/env python\' > test.py';
     exec($c);
     exec('chmod +x test.py'); // make it executable
@@ -126,32 +78,20 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
     $function = explode(':', $code, 2);
 
-    
-//    echo "given name: ".$function[0]."<br>";
-    
-    
     // TODO: retrieve actual intended function name from somewhere
     $function_name = $question_info['function'];
+    // dummy value
+    // $function_name = "thatfunction(n)";
     $actual = 'def '.$function_name;
 
-//    echo "actual name: ".$actual."<br>";
-    
     // $autograder_comments = $autograder_comments."Testing function name... >>>>>>";
     if ($function[0] != $actual){
-        $total_points = $total_points - ($point_decrement / 10);
+        $total_points = $total_points - ($point_decrement / 2);
         $autograder_comments = $autograder_comments."DEDUCT ".($max_points / 10)." -- incorrect function name\n";
-//        $function[0] = $actual;
-//        $function = implode("(",$function);
-//        $function = explode(":", $function, 2);
         $function[0] = $actual.":";
     }
-    else{ 
-//        $function = implode("(",$function);
-//        $function = explode(":",$function,2);
-        $function[0] = $function[0].":"; 
-    }
+    else{ $function[0] = $function[0].":"; }
 
-//    echo "function[0]: ".$function[0]."<br>";
 
     //////////////////
     ////////////////// for loop error (naive implementation)
@@ -165,7 +105,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     }
 
     //////////////////
-    ////////////////// TODO: switch if code uses for and if uses print
+    ////////////////// print statement vs. return statement
     //////////////////
 
 
@@ -176,10 +116,12 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     $f = explode('def ', $function[0]);
     $function_parts = explode('(', $f[1]);
 
-    
-    //CONFUSED
-    if ($uses_for == 'true'){ $print_string = "\nprint(".$function_parts[0]."(int(sys.argv[1])))"; }
-    else if ($uses_print == 'true') { $print_string = "\n".$function_parts[0]."(int(sys.argv[1]))"; }
+    if ($uses_return == 'true'){ 
+        $print_string = "\nprint(".$function_parts[0]."(int(sys.argv[1])))"; 
+    }
+    else if ($uses_print == 'true') { 
+        $print_string = "\n".$function_parts[0]."(int(sys.argv[1]))"; 
+    }
     else { $print_string = ""; }
     file_put_contents("test.py", $print_string, FILE_APPEND);
 
@@ -198,15 +140,25 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     $c = escapeshellcmd($temp);
     $output = shell_exec($c);
     if (strpos($output, 'Error') != false) { $has_errors = true; } 
+    // if (preg_match('~[Ee]rror~', $output) { $has_errors = true; } 
 
-
-    // TODO: consider adding the line number where the error occured
     while ($has_errors && $fixable){
         if (strpos($output, 'Error') != false) {
+        // if (preg_match('~[Ee]rror~', $output){
+            // $autograder_comments = $autograder_comments.$output;
             // find the line where the error is
-            $output_lines = explode("\n", $output);
-            $line = explode("line", $output_lines[0]);
-            $line_number = intval(trim(preg_replace('/[^0-9]/', '', $line[1])));
+            // $output_lines = explode("\n", $output);
+            // $line = explode("line", $output_lines[0]);
+            // $line_number = intval(trim(preg_replace('/[^0-9]/', '', $line[1])));
+            $pattern='~line \d~';
+
+            $success = preg_match($pattern, $output, $match);
+            if ($success) {
+                $line_number = intval(trim(preg_replace('/[^0-9]/', '', $match[0])));
+            }
+            else{
+                $fixable = false;
+            }
 
             $code = file_get_contents("test.py");
             $code_lines = explode("\n", $code);
@@ -217,8 +169,10 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
                 $mistake = trim(explode("(", $error_line)[0]);
                 similar_text("print", $mistake, $percent);
                 if ($percent > 0.5){
-                    preg_replace($mistake, 'print', $code_lines[$line_number-1]);  // replace the misspelled "print" with the right word
-                    $autograder_comments = $autograder_comments."DEDUCT ".($max_points/ 10)." -- function name misspelled, correction attempted\n";
+                    $incorrect_line = $code_lines[$line_number-1];
+                    preg_replace($mistake, 'print', $incorrect_line); 
+                    $code_lines[$line_number-1] = $incorrect_line; // replace the misspelled "print" with the right word
+                    $autograder_comments = $autograder_comments."DEDUCT ".($max_points/ 10)." -- function name misspelled, correction attempted:\n".$code_lines[$line_number-1];
                     $count = $count - 1;
                 } // TODO: other common functions that could be misspelled
                 else{  // else, it's unfixable and we don't know what they were trying to say.
@@ -240,7 +194,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
             if (strpos($output, 'SyntaxError') != false) {
                 $autograder_comments = $autograder_comments."Detected SyntaxError... >>>>>>";
                 // this also applies to missing parentheses and probably other stuff (assuming python3) but for now this is probably good enough for now
-                $autograder_comments = $autograder_comments."ERROR -- Unable to automatically fix syntax errors, manual grading may be required\n";
+                $autograder_comments = $autograder_comments."ERROR -- Unable to automatically fix syntax errors, manual grading may be required:\n".$output;
                 $fixable = false;
             }
 
@@ -270,15 +224,13 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     ////////////////// the part where we actually run the code for all the test cases
     //////////////////
 
-    
-    //NOT WORKING
     for ($i = 0; $i < sizeof($test_input); $i++){
         $temp = './test.py '.$test_input[$i];
         $c = escapeshellcmd($temp);
         $output = shell_exec($c);
         if (trim($output) != $test_output[$i]){
             $total_points = $total_points - $point_decrement;
-            $autograder_comments = $autograder_comments."DEDUCT ".$point_decrement." -- Test Case #".$i." did not work successfully. Expected: ".$test_output[$i]." || Actual: ".trim($output)."\n";
+            $autograder_comments = $autograder_comments."DEDUCT ".$point_decrement." -- Test Case #".$i." did not match. Expected: ".$test_output[$i]." || Actual: ".trim($output)."\n";
         }
     }
 
@@ -289,12 +241,6 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     //////////////////////////////////////////// End autograder
     ////////////////////////////////////////////
 
-
-    // submitting results back to database
-    // TODO: this part **should** largely remain the same, shouldn't have to change
-    // actually since we add the questions to the database, will need to see how that's formatted too
-    // the important part, of course, is to make sure the error checking works for one question
-    // then we can scale! yay!
     $url = 'https://web.njit.edu/~sk2292/RC/add_results_db.php';
 
     // TODO: I'm pretty sure that if I just send multiple post requests it should work.
@@ -307,7 +253,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
         'QID' => $qid,
         'TestID' => $testid,
         'EarnedPts' => $total_points,
-        'AnsText' => $code, // the original code, not the one used to run the test cases
+        'AnsText' => $original_code, // the original code, not the one used to run the test cases
         'Comments' => $autograder_comments,
     );
 //    $post_data = array(
@@ -340,7 +286,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 // send something back to front-end -- success/failure maybe? idk
 // echo 'Success';
 // dummy return value
-//echo "Total points: ".$total_points."/".$max_points."   ".$autograder_comments;
-echo $output;
+// echo "Total points: ".$total_points."/".$max_points."   ".$autograder_comments;
+echo "Submitted";
 
 ?>
