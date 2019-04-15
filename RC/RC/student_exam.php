@@ -79,12 +79,14 @@
                 }
                 var ucid = "<?php echo $val ?>";
 //                document.getElementById("submit_content").innerHTML = code;
+                code = encodeURIComponent(code);
                 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {
                         document.getElementById("submit_content").innerHTML = this.responseText;
                         location.reload();
+                        
 
                     }
                   };
