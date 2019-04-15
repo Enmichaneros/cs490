@@ -24,17 +24,20 @@
 
     if(mysql_num_rows($add_t) > 0)
     {
-        $r = mysql_fetch_array($add_t);
-        $grade=htmlspecialchars($r["Grade"]); 
-        $updated_grade = intval($grade) + intval($earnedpts);
-        $query = "UPDATE EXAM SET Grade='$updated_grade' AND Released='0' WHERE UCID='$ucid' AND TestID='$testid';";
+        $exam_grade = "SELECT SUM(EarnedPts) FROM RESULTS WHERE TestID='$testid' AND UCID='$ucid';";
+        ( $eg = mysql_query( $exam_grade ) or die (mysql_error()) );
+        
+        $eg = mysql_fetch_array($eg);
+        $grade=htmlspecialchars($eg["SUM(EarnedPts)"]);
+        
+        $edit_exam = "UPDATE EXAM SET Grade='$grade' WHERE UCID='$ucid' AND TestID='$testid';";
+        ( $ee = mysql_query( $edit_exam ) or die (mysql_error()) );
     }
     else {
         $query = "INSERT INTO EXAM (UCID,TestID, Grade, Released) VALUES ('$ucid','$testid','$earnedpts','0');";
+        ( $add_points = mysql_query( $query ) or die (mysql_error()) );
     }
 
-
-    ( $add_points = mysql_query( $query ) or die (mysql_error()) );
 
     if ($added) {
         echo "Submitted";
