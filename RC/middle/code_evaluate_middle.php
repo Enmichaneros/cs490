@@ -87,8 +87,8 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
     // $autograder_comments = $autograder_comments."Testing function name... >>>>>>";
     if ($function[0] != $actual){
-        $total_points = $total_points - ($point_decrement / 10);
-        $autograder_comments = $autograder_comments."DEDUCT ".($max_points / 10)." -- incorrect function name\n";
+        $total_points = $total_points - floor($point_decrement / 2);
+        $autograder_comments = $autograder_comments."DEDUCT ".floor($point_decrement / 2)." -- incorrect function name\n";
         $function[0] = $actual.":";
     }
     else{
