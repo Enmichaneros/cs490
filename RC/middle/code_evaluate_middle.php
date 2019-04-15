@@ -4,7 +4,13 @@ $ucid = $_POST['UCID'];
 $testid = $_POST['TestID'];
 $question_ids = explode('```',  $_POST['QID']);
 $answers = explode('```',  $_POST['Code']);
-
+//$ucid = 'sk2292';
+//$testid = '10';
+//$question_ids = explode('```',  "75```76```77```");
+//$answers = explode('```',  "def countArticles():
+//	return("5')```def vowelUseDict():
+//	return("5")```def importantWords():
+//	return("5")```");
 
 
 //echo $ucid . "<br>" . $testid . "<br>" . $question_ids . "<br>" . $answers . "<br>";
@@ -41,7 +47,7 @@ $answers = explode('```',  $_POST['Code']);
 
 for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     // dummy question_info values
-     $code = "def thatfunction(item):\nprint(True)";
+//     $code = "def thatfunction(item):\nprint(True)";
 //     $question_info = array(
 //         'input' => '1```-7',
 //         'output' => 'True```False',
@@ -54,7 +60,10 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
     $code = $answers[$q];
     $qid = $question_ids[$q];
-
+    
+//    echo "code: ".$code."<br>";
+//    echo "qid: ".$qid."<br>";
+    
     // grab the values from the database
     // TODO: check correct posting format
     $url = 'https://web.njit.edu/~sk2292/RC/get_testcases_db.php';
@@ -73,6 +82,8 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
         echo "1cURL error: " . curl_error($ch);
     }
     curl_close($ch); //close curl
+    
+    $question_info = json_decode($question_info,true);
 
     // TODO: these will be comma separated values
     $test_input = explode('```', $question_info['input']);
@@ -80,12 +91,22 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     $max_points = intval($question_info['points']);
     $total_points = intval($question_info['points']);
     
+//    echo "size of test input: ".$question_info['input']."<br>";
+//    echo "size of test output: ".$question_info['output']."<br>";
+//    echo "max points: ".strval($max_points)."<br>";
+
 
     $point_decrement = $total_points / sizeof($test_input);
     $uses_for = $question_info['for'];
     $uses_while = $question_info['while'];
     $uses_print = $question_info['print'];
     $uses_return = $question_info['return'];
+    
+//    echo "for: ".$uses_for."<br>";
+//    echo "while: ".$uses_while."<br>";
+//    echo "print: ".$uses_print."<br>";
+//    echo "return: ".$uses_return."<br>";
+
 
     // writing the file and making it executable, hosted onto my personal njit server, so is a local file
     $c = 'echo \'#!/usr/bin/env python\' > test.py';
@@ -105,18 +126,32 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
     $function = explode(':', $code, 2);
 
+    
+//    echo "given name: ".$function[0]."<br>";
+    
+    
     // TODO: retrieve actual intended function name from somewhere
     $function_name = $question_info['function'];
     $actual = 'def '.$function_name;
 
+//    echo "actual name: ".$actual."<br>";
+    
     // $autograder_comments = $autograder_comments."Testing function name... >>>>>>";
     if ($function[0] != $actual){
         $total_points = $total_points - ($point_decrement / 10);
         $autograder_comments = $autograder_comments."DEDUCT ".($max_points / 10)." -- incorrect function name\n";
+//        $function[0] = $actual;
+//        $function = implode("(",$function);
+//        $function = explode(":", $function, 2);
         $function[0] = $actual.":";
     }
-    else{ $function[0] = $function[0].":"; }
+    else{ 
+//        $function = implode("(",$function);
+//        $function = explode(":",$function,2);
+        $function[0] = $function[0].":"; 
+    }
 
+//    echo "function[0]: ".$function[0]."<br>";
 
     //////////////////
     ////////////////// for loop error (naive implementation)
@@ -141,6 +176,8 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     $f = explode('def ', $function[0]);
     $function_parts = explode('(', $f[1]);
 
+    
+    //CONFUSED
     if ($uses_for == 'true'){ $print_string = "\nprint(".$function_parts[0]."(int(sys.argv[1])))"; }
     else if ($uses_print == 'true') { $print_string = "\n".$function_parts[0]."(int(sys.argv[1]))"; }
     else { $print_string = ""; }
@@ -233,6 +270,8 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     ////////////////// the part where we actually run the code for all the test cases
     //////////////////
 
+    
+    //NOT WORKING
     for ($i = 0; $i < sizeof($test_input); $i++){
         $temp = './test.py '.$test_input[$i];
         $c = escapeshellcmd($temp);
@@ -302,6 +341,6 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 // echo 'Success';
 // dummy return value
 //echo "Total points: ".$total_points."/".$max_points."   ".$autograder_comments;
-echo "Submitted";
+echo $output;
 
 ?>

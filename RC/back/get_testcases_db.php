@@ -3,6 +3,8 @@
 
     $qid = $_POST['QID'];
     $testid = $_POST['TestID'];
+//    $qid = '75';
+//    $testid = '10';
 
     ($dbh = mysql_connect ($hostname,$username,$password))
             or die("Unable to connect to MySQL database");
@@ -34,14 +36,14 @@
 
 
     $use = mysql_fetch_array($u);
-    $for =htmlspecialchars($r["ForLoop"]);
-    $while =htmlspecialchars($r["WhileLoop"]);
-    $return =htmlspecialchars($r["ReturnStatement"]);
-    $print =htmlspecialchars($r["PrintStatement"]);
+    $for =htmlspecialchars($use["ForLoop"]);
+    $while =htmlspecialchars($use["WhileLoop"]);
+    $return =htmlspecialchars($use["ReturnStatement"]);
+    $print =htmlspecialchars($use["PrintStatement"]);
         
 
     $funcName = mysql_fetch_array($name);
-    $func_name =htmlspecialchars($r["FuncName"]);
+    $func_name =htmlspecialchars($funcName["FuncName"]);
         
     echo json_encode(array('input' => "$input_string",'output' => "$output_string",'points' => "$points_string",'for' => "$for",'while' => "$while",'return' => "$return",'print' => "$print",'function' => "$func_name"));
 
