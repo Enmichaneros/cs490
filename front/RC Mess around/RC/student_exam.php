@@ -24,7 +24,7 @@
                   };
 
 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RC/show_exams.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/show_exams.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send();  
             }
@@ -44,7 +44,7 @@
                       };
 
 
-                    xhttp.open("POST","https://web.njit.edu/~sk2292/RC/exam.php");
+                    xhttp.open("POST","https://web.njit.edu/~jj373/RC/exam.php");
                     xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                     xhttp.send("TestID="+testid);
                 }
