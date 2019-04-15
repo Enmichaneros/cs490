@@ -172,6 +172,9 @@
                     Output += document.getElementById(out).value + "```";
 
                 }
+                Input = encodeURIComponent(Input);
+                Output = encodeURIComponent(Output);
+                QText = encodeURIComponent(QText);
 //                document.getElementById("add_question_content").innerHTML = Input;
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {

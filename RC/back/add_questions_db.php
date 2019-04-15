@@ -1,10 +1,10 @@
 <?php
     include("db_details.php");
 
-    $qtext = $_POST['QText'];
+    $qtext = urldecode($_POST['QText']_;
     $funcname = $_POST['FuncName'];
-    $input = $_POST['Input'];
-    $output = $_POST['Output'];
+    $input = urldecode($_POST['Input']);
+    $output = urldecode($_POST['Output']);
     $diff = $_POST['Diff'];
     $keyword = $_POST['Keyword'];
     $topic = $_POST['Topic'];
