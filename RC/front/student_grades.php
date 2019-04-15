@@ -26,7 +26,7 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RC/student_get_grades.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/student_get_grades.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("UCID="+ucid);
             }
@@ -43,7 +43,7 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RC/student_get_exam.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/student_get_exam.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("UCID="+ucid+"&TestID="+testid);
             }
