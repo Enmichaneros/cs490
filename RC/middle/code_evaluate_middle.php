@@ -51,9 +51,10 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     $test_output = explode('```', $question_info['output']);
     $max_points = intval($question_info['points']);
     $total_points = intval($question_info['points']);
+
     
 
-    $point_decrement = $total_points / (sizeof($test_input) - 1);
+    $point_decrement = floor($total_points / (sizeof($test_input) - 1));
     $uses_for = $question_info['for'];
     $uses_while = $question_info['while'];
     $uses_print = $question_info['print'];
@@ -76,21 +77,34 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     ////////////////// incorrect function name
     //////////////////
 
-    $function = explode(':', $code, 2);
+    // this breaks if the colon is missing
+    // $function = explode(':', $code, 2);
+    $code_lines = explode("\n", $code);
+    // foreach ($code_lines as $line){
+    for ($i = 0; $i < sizeof($code_lines)-1; $i++){
+        if (strpos($line, 'def') != false) {
+            $count = $i;
+            break;
+        }
+    }
+
+
+
 
     // TODO: retrieve actual intended function name from somewhere
     $function_name = $question_info['function'];
     // dummy value
     // $function_name = "thatfunction(n)";
-    $actual = 'def '.$function_name;
+    $actual = 'def '.$function_name.":";
 
     // $autograder_comments = $autograder_comments."Testing function name... >>>>>>";
-    if ($function[0] != $actual){
-        $total_points = $total_points - ($point_decrement / 2);
-        $autograder_comments = $autograder_comments."DEDUCT ".($max_points / 10)." -- incorrect function name\n";
-        $function[0] = $actual.":";
+    if ($count >= sizeof($code_lines) && $code_lines[$count] != $actual){
+        $points = floor($point_decrement / 2);
+        $total_points = $total_points - $points;
+        $autograder_comments = $autograder_comments."DEDUCT ".$points." -- incorrect function name\n";
+        $code_lines[$count] = $actual;
     }
-    else{ $function[0] = $function[0].":"; }
+    // else{ $function[0] = $function[0].":"; }
 
 
     //////////////////
@@ -99,8 +113,23 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
     // TODO: question_info also needs to store/be able to retrieve if a question requires a for loop
     if ($uses_for == 'true'){ 
-        if (strpos($function[1], 'for') == false) {
+        if (strpos($code, 'for') == false) {
             $autograder_comments = $autograder_comments."FLAG -- Does not contain for loop when specified\n";
+        } 
+    }
+    if ($uses_while == 'true'){ 
+        if (strpos($code, 'while') == false) {
+            $autograder_comments = $autograder_comments."FLAG -- Does not contain while loop when specified\n";
+        } 
+    }
+    if ($uses_return == 'true'){ 
+        if (strpos($code, 'return') == false) {
+            $autograder_comments = $autograder_comments."FLAG -- Does not contain return statement when specified\n";
+        } 
+    }
+    if ($uses_print == 'true'){ 
+        if (strpos($code, 'print') == false) {
+            $autograder_comments = $autograder_comments."FLAG -- Does not contain print statement when specified\n";
         } 
     }
 
@@ -110,21 +139,27 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
 
     file_put_contents("test.py", "import sys\n", FILE_APPEND);
-    foreach ($function as $value) { file_put_contents("test.py", $value, FILE_APPEND); }
+    foreach ($code_lines as $value) { file_put_contents("test.py", $value."\n", FILE_APPEND); }
 
     // print results to console (if required to edit)
-    $f = explode('def ', $function[0]);
-    $function_parts = explode('(', $f[1]);
+    // $f = explode('def ', $function[0]);
+    // $function_parts = explode('(', $f[1]);
 
-    if ($uses_return == 'true'){ 
-        $print_string = "\nprint(".$function_parts[0]."(int(sys.argv[1])))"; 
-    }
-    else if ($uses_print == 'true') { 
-        $print_string = "\n".$function_parts[0]."(int(sys.argv[1]))"; 
-    }
-    else { $print_string = ""; }
-    file_put_contents("test.py", $print_string, FILE_APPEND);
+    // if ($uses_return == 'true'){ 
+    //     $print_string = "\nprint(".$function_parts[0]."(int(sys.argv[1])))"; 
+    // }
+    // else if ($uses_print == 'true') { 
+    //     $print_string = "\n".$function_parts[0]."(int(sys.argv[1]))"; 
+    // }
+    // else { $print_string = ""; }
+    // file_put_contents("test.py", $print_string, FILE_APPEND);
 
+    $base_code = file_get_contents("test.py");
+    $code_lines = explode("\n", $base_code);
+
+    // adding the first test case for code testing purposes
+    // this is assuming that the test input includes the necessary print files
+    file_put_contents("test.py", "\n".$test_input[0], FILE_APPEND);
 
     //////////////////
     ////////////////// the part where we kinda run the code to test for the other errors bc they're less obvious
@@ -134,34 +169,26 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     $count = 10; // number of error iterations so far; manually set                                                                                                                                                          
     $fixable = true; // to check if it's even possible to fix at all
     $has_errors = false;
+    $points = floor($point_decrement / 2);
 
     exec('chmod +x error.py');
-    $temp = './error.py '.$test_input[0];
+    $temp = './error.py';
     $c = escapeshellcmd($temp);
     $output = shell_exec($c);
     if (strpos($output, 'Error') != false) { $has_errors = true; } 
-    // if (preg_match('~[Ee]rror~', $output) { $has_errors = true; } 
 
     while ($has_errors && $fixable){
         if (strpos($output, 'Error') != false) {
-        // if (preg_match('~[Ee]rror~', $output){
-            // $autograder_comments = $autograder_comments.$output;
-            // find the line where the error is
-            // $output_lines = explode("\n", $output);
-            // $line = explode("line", $output_lines[0]);
-            // $line_number = intval(trim(preg_replace('/[^0-9]/', '', $line[1])));
+
             $pattern='~line \d~';
 
             $success = preg_match($pattern, $output, $match);
-            if ($success) {
-                $line_number = intval(trim(preg_replace('/[^0-9]/', '', $match[0])));
+            if ($success) { 
+                // the error we want to fix is probably the last one in the error stack
+                $line_number = intval(trim(preg_replace('/[^0-9]/', '', $match[sizeof($match)-1]))); 
             }
-            else{
-                $fixable = false;
-            }
+            else{ $fixable = false; }
 
-            $code = file_get_contents("test.py");
-            $code_lines = explode("\n", $code);
             $error_line = $code_lines[$line_number-1]; // it starts counting from one
 
             // NameError
@@ -172,7 +199,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
                     $incorrect_line = $code_lines[$line_number-1];
                     preg_replace($mistake, 'print', $incorrect_line); 
                     $code_lines[$line_number-1] = $incorrect_line; // replace the misspelled "print" with the right word
-                    $autograder_comments = $autograder_comments."DEDUCT ".($max_points/ 10)." -- function name misspelled, correction attempted:\n".$code_lines[$line_number-1];
+                    $autograder_comments = $autograder_comments."DEDUCT ".$points." -- function name misspelled, correction attempted:\n".$code_lines[$line_number-1];
                     $count = $count - 1;
                 } // TODO: other common functions that could be misspelled
                 else{  // else, it's unfixable and we don't know what they were trying to say.
@@ -185,8 +212,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
             if (strpos($output, 'IndentationError') != false) {
                 $indented_string = " ".$error_line;  // it only throws an indent error if there are zero spaces; even one counts as a proper indent apparently
                 $code_lines[$line_number-1] = $indented_string;
-                // $autograder_comments = $autograder_comments."New line: ".$indented_string;
-                $autograder_comments = $autograder_comments."DEDUCT ".($max_points / 10)." -- incorrect indentation\n";
+                $autograder_comments = $autograder_comments."DEDUCT ".$points." -- incorrect indentation\n";
                 $count = $count - 1;            
             }
 
@@ -200,16 +226,17 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
             file_put_contents("test.py", ""); // first input nothing, to rewrite the file
             foreach ($code_lines as $line) { // then rewrite each line from the code, including the edited one
-                // $autograder_comments = $autograder_comments.$line;
                 file_put_contents("test.py", $line."\n", FILE_APPEND);
             }
+            // then add the input afterwards
+            file_put_contents("test.py", "\n".$test_input[0], FILE_APPEND);
             
             $output = shell_exec($c); // run the error function again, storing the output
             if ($count == 0){ $fixable = false; } // if it keeps having errors, it might not be fixable
         }
         else {
             $has_errors = false;
-            $total_points = max(($total_points - ( 5 * ($max_count - $count))), 0); // deduct points, if that's too many then set to 0.
+            $total_points = max(($total_points - ( $points * ($max_count - $count))), 0); // deduct points, if that's too many then set to 0.
         }
     }
 
@@ -225,7 +252,16 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     //////////////////
 
     for ($i = 0; $i < sizeof($test_input); $i++){
-        $temp = './test.py '.$test_input[$i];
+
+        file_put_contents("test.py", ""); // first input nothing, to rewrite the file just in case
+        // then rewrite each line from the base code
+        foreach ($code_lines as $line) { file_put_contents("test.py", $line."\n", FILE_APPEND);}
+
+       
+        file_put_contents("test.py", "\n".$test_input[$i], FILE_APPEND); // then add the input afterwards
+        
+        // run the code
+        $temp = './test.py';
         $c = escapeshellcmd($temp);
         $output = shell_exec($c);
         if (trim($output) != $test_output[$i]){
@@ -247,6 +283,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     
 //    echo $ucid . "<br>" . $qid . "<br>" . $testid . "<br>" . $total_points . "<br>" . $code . "<br>" . $comments. "<br>";
     
+    $end_code = file_get_contents("test.py"); // for debugging purposes
     
     $post_data = array(
         'UCID' => $ucid,
