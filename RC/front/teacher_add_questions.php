@@ -148,7 +148,7 @@
                 
                 
                 //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RC/filter.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/filter.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic);
 
@@ -182,7 +182,7 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RC/add_questions.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/add_questions.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("QText="+QText+"&FuncName="+FuncName+"&Input="+Input+"&Output="+Output+"&Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic+"&ForLoop="+ForLoop+"&WhileLoop="+WhileLoop+"&Return="+Return+"&Print="+Print);
             }

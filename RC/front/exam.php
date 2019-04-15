@@ -6,7 +6,7 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~sk2292/RC/exam_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RC/exam_middle.php';
     $post_data = array(
         'TestID' => $testid,
 
