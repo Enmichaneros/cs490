@@ -9,7 +9,7 @@
 
     mysql_select_db($project);
 
-    $avail_tests = "SELECT DISTINCT E.TestID, T.TestName FROM EXAM E LEFT JOIN TESTS T ON E.TestID = T.TestID WHERE E.UCID='$ucid';";
+    $avail_tests = "SELECT DISTINCT E.TestID, T.TestName FROM EXAM E LEFT JOIN TESTS T ON E.TestID = T.TestID WHERE E.UCID='$ucid' AND E.Released='1';";
 
     ( $at = mysql_query( $avail_tests )) or die (mysql_error());
     if(mysql_num_rows($at) == 0) die ("no data");

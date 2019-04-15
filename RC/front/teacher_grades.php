@@ -6,7 +6,9 @@
         <div id="pickExam" class="content">
             <h2>Grades</h2>
             <div style="margin-bottom:100px;">
-                <p id="test_dropdown"></p>
+                <p id="test_dropdown" style="display: inline;"></p>
+                <input type="button" value="Release Scores for Selected Exam" onclick="release()" style="display:inline;">
+                <p id="released_content" style="display: inline;"></p>
                 <p id="student_dropdown"></p>
                 <p id="student_exam"></p>
                 <p id="edit_grades"></p>
@@ -101,6 +103,22 @@
                 xhttp.open("POST","https://web.njit.edu/~sk2292/RC/edit_grade.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("UCID="+ucid+"&TestID="+testid+"&QID="+QID+"&EarnedPts="+points_string+"&Comments="+comments_string);
+            }
+            
+            function release() {
+                var testid = document.getElementById("availTest").value;
+                
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("released_content").innerHTML = this.response;
+                    }
+                  };
+                
+                
+                xhttp.open("POST","https://web.njit.edu/~sk2292/RC/release_grades.php");
+                xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                xhttp.send("TestID="+testid);
             }
 
         </script>

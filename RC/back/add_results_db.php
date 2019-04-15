@@ -27,10 +27,10 @@
         $r = mysql_fetch_array($add_t);
         $grade=htmlspecialchars($r["Grade"]); 
         $updated_grade = intval($grade) + intval($earnedpts);
-        $query = "UPDATE EXAM SET Grade='$updated_grade' WHERE UCID='$ucid' AND TestID='$testid';";
+        $query = "UPDATE EXAM SET Grade='$updated_grade' AND Released='0' WHERE UCID='$ucid' AND TestID='$testid';";
     }
     else {
-        $query = "INSERT INTO EXAM (UCID,TestID, Grade) VALUES ('$ucid','$testid','$earnedpts');";
+        $query = "INSERT INTO EXAM (UCID,TestID, Grade, Released) VALUES ('$ucid','$testid','$earnedpts','0');";
     }
 
 
