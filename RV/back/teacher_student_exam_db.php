@@ -65,7 +65,7 @@
             $Deduct =htmlspecialchars($t["Deduct"]);
             $RC =htmlspecialchars($t["RC"]);
             $out .= "<tr>";
-            $out .= "<td align='center'> <input type='text' value='$Deduct' class='changesToPoints' id='$QID'> </td><td align='center'> <textarea class='changesToComments' id='$QID' rows='15' cols='200' style='width: 200px; height: 75px; resize: none;'>$RC</textarea>";
+            $out .= "<td align='center'> <input type='text' value='$Deduct' class='changesToPoints' id='$QID'> </td><td align='center'> <textarea class='changesToComments codearea' id='$QID' rows='15' cols='200' style='width: 200px; height: 75px; resize: none;'>$RC</textarea>";
             $out .= "</tr>";
         }
         

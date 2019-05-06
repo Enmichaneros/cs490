@@ -5,6 +5,8 @@
     $qid = isset($_POST['QID']) ? $_POST['QID'] : '';
     $points = isset($_POST['EarnedPts']) ? $_POST['EarnedPts'] : '';
     $comments = isset($_POST['Comments']) ? $_POST['Comments'] : '';
+    $num = isset($_POST['Num']) ? $_POST['Num'] : '';
+
 
 
     //posting with curl
@@ -16,6 +18,7 @@
         'QID' => $qid,
         'EarnedPts' => $points,
         'Comments' => $comments,
+        'Num' => $num,
     );
 
     $ch = curl_init();

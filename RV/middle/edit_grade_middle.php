@@ -5,6 +5,7 @@
     $qid = $_POST['QID'];
     $points = $_POST['EarnedPts'];
     $comments = $_POST['Comments'];
+    $num = $_POST['Num'];
 
 
     //posting with curl to SQL
@@ -16,6 +17,7 @@
         'QID' => $qid,
         'EarnedPts' => $points,
         'Comments' => $comments,
+        'Num' => $num,
     );
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url); // url to send to

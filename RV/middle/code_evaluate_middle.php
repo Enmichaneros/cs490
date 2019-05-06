@@ -494,7 +494,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 //    echo $ucid . "<br>" . $qid . "<br>" . $testid . "<br>" . $total_points . "<br>" . $code . "<br>" . $comments. "<br>";
     
     $end_code = file_get_contents("test.py"); // for debugging purposes
-    echo $total_points."```".$original_code."```".$autograder_comments."<br>";
+
     $post_data = array(
         'UCID' => $ucid,
         'QID' => $qid,
