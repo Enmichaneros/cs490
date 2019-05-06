@@ -4,7 +4,7 @@
 
         <div class="content">
             <div class="split left">
-                <h2 style="margin-left: 10px;">Filter Questions</h2>
+                <p class="title" align="center">Filter Questions</p>
                 <div style="text-align: center;">
                     <p style="display: inline; padding-right: 70px;">Difficulty</p>
                     <p style="display: inline; padding-right: 100px;">Topic</p>
@@ -47,16 +47,16 @@
             </div>
 
             <div class="split right">
-                <h2 style="margin-left: 10px;">Add Question</h2>
+                <p class="title" align="center">Add Questions</p>
                 <div>
                     <p style="text-align: center;">Enter Question: </p>
-                    <p style="padding-bottom: 10px; padding-left: 150px; padding-top: 0px;"><textarea id="question_addQuestion" cols="50" rows="10"></textarea></p>
+                    <p style="padding-bottom: 10px; text-align:center; padding-top: 0px;"><textarea id="question_addQuestion" class = "codearea" cols="50" rows="8"></textarea></p>
                     
                     <p style="text-align: center; display: inline; padding-left: 200px;">Function Name: </p><input style="display: inline;" type="text" placeholder="Function Name" id="funcName_addQuestion"/>
                     
                     <div style="text-align: center; padding-top: 20px;">
                         <p style="display: inline;">Difficulty</p>
-                        <p style="display: inline; padding-left: 80px; padding-right: 80px; ">Topic</p>
+                        <p style="display: inline; padding-left: 90px; padding-right: 120px; ">Topic</p>
                     </div>
                     <div style="text-align: center; padding-bottom: 30px;">
                         <div style="display: inline;">
@@ -94,11 +94,11 @@
                     </div>
                     
                     <div>
-                        <p style="text-align: center; padding-bottom: 10px; padding-top: 0px;">Enter TestCase 1:&nbsp;&nbsp;&nbsp;
+                        <p style="text-align: center; padding-bottom: 10px; padding-top: 0px;">Enter Test Case 1:&nbsp;&nbsp;&nbsp;
                         Input:&nbsp;<textarea id="input0" cols="50" rows="10" style="resize:none; width: 150px;"></textarea>&nbsp;&nbsp;
                         Output:&nbsp;<textarea id="output0" cols="50" rows="10" style="resize:none; width: 150px;"></textarea>
                         </p>
-                        <p style="text-align: center; padding-bottom: 10px; padding-top: 0px;">Enter TestCase 2:&nbsp;&nbsp;&nbsp;
+                        <p style="text-align: center; padding-bottom: 10px; padding-top: 0px;">Enter Test Case 2:&nbsp;&nbsp;&nbsp;
                         Input:&nbsp;<textarea id="input1" cols="50" rows="10" style="resize:none; width: 150px;"></textarea>&nbsp;&nbsp;
                         Output:&nbsp;<textarea id="output1" cols="50" rows="10" style="resize:none; width: 150px;"></textarea>
                         </p>
@@ -125,7 +125,7 @@
                     return;
                 }
                 ++testcaseNum;
-                testcase = "<p style='text-align: center; padding-bottom: 10px; padding-top: 0px;'>Enter TestCase "+(testcaseNum+1)+":&nbsp;&nbsp;&nbsp;Input:&nbsp;<textarea id='input"+testcaseNum+"' cols='50' rows='10' style='resize:none; width: 150px;'></textarea>&nbsp;&nbsp;Output:&nbsp;<textarea id='output"+testcaseNum+"' cols='50' rows='10' style='resize:none; width: 150px;'></textarea></p>";
+                testcase = "<p style='text-align: center; padding-bottom: 10px; padding-top: 0px;'>Enter Test Case "+(testcaseNum+1)+":&nbsp;&nbsp;&nbsp;Input:&nbsp;<textarea id='input"+testcaseNum+"' cols='50' rows='10' style='resize:none; width: 150px;'></textarea>&nbsp;&nbsp;Output:&nbsp;<textarea id='output"+testcaseNum+"' cols='50' rows='10' style='resize:none; width: 150px;'></textarea></p>";
                 id = "testcase_content"+testcaseNum
                 document.getElementById(id).innerHTML = testcase;
 
@@ -144,7 +144,8 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/filter.php");
+                //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/filter.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic);
 
@@ -180,12 +181,11 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/add_questions.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/add_questions.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("QText="+QText+"&FuncName="+FuncName+"&Input="+Input+"&Output="+Output+"&Diff="+Diff+"&Topic="+Topic+"&ForLoop="+ForLoop+"&WhileLoop="+WhileLoop+"&Return="+Return+"&Print="+Print);
             }
         </script>
-<?php 
-	include_once 'footer.php';
- ?>
+    </body>
+</html>
 
