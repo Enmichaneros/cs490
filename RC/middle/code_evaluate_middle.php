@@ -47,7 +47,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
     $question_info = json_decode($output, true);
 
-    $test_input = explode('```', $question_info['input']);
+    $test_input = explode('```', htmlspecialchars_decode($question_info['input']));
     $test_output = explode('```', $question_info['output']);
     $max_points = intval($question_info['points']);
     $total_points = intval($question_info['points']);
@@ -72,38 +72,54 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
     // for errors detected by autograder, so the teacher knows why points were deducted
     $autograder_comments = "";
+    // $autograder_comments = htmlspecialchars_decode($question_info['input'])."\n\n";
 
     //////////////////
     ////////////////// incorrect function name
     //////////////////
 
     // this breaks if the colon is missing
-    // $function = explode(':', $code, 2);
-    $code_lines = explode("\n", $code);
-    // foreach ($code_lines as $line){
-    for ($i = 0; $i < sizeof($code_lines)-1; $i++){
-        if (strpos($line, 'def') != false) {
-            $count = $i;
-            break;
-        }
-    }
+    $function = explode(':', $code, 2);
 
-
-
-
-    // TODO: retrieve actual intended function name from somewhere
     $function_name = $question_info['function'];
-    // dummy value
-    // $function_name = "thatfunction(n)";
-    $actual = 'def '.$function_name.":";
+    // $function_name = 'thatfunction(item)';
+    $actual = 'def '.$function_name;
 
     // $autograder_comments = $autograder_comments."Testing function name... >>>>>>";
-    if ($count >= sizeof($code_lines) && $code_lines[$count] != $actual){
-        $points = floor($point_decrement / 2);
-        $total_points = $total_points - $points;
-        $autograder_comments = $autograder_comments."DEDUCT ".$points." -- incorrect function name\n";
-        $code_lines[$count] = $actual;
+    if ($function[0] != $actual){
+        $total_points = $total_points - floor($point_decrement / 2);
+        $autograder_comments = $autograder_comments."DEDUCT ".floor($point_decrement / 2)." -- incorrect function name\n";
+        $function[0] = $actual.":";
     }
+    else{
+        $function[0] = $function[0].":";
+    }
+
+    // $code_lines = explode("\n", $code);
+    // // foreach ($code_lines as $line){
+    // for ($i = 0; $i < sizeof($code_lines)-1; $i++){
+    //     if (strpos($line, 'def') != false) {
+    //         $count = $i;
+    //         break;
+    //     }
+    // }
+
+
+
+
+    // // TODO: retrieve actual intended function name from somewhere
+    // $function_name = $question_info['function'];
+    // // dummy value
+    // // $function_name = "thatfunction(n)";
+    // $actual = 'def '.$function_name.":";
+
+    // // $autograder_comments = $autograder_comments."Testing function name... >>>>>>";
+    // if ($count >= sizeof($code_lines) && $code_lines[$count] != $actual){
+    //     $points = floor($point_decrement / 2);
+    //     $total_points = $total_points - $points;
+    //     $autograder_comments = $autograder_comments."DEDUCT ".$points." -- incorrect function name\n";
+    //     $code_lines[$count] = $actual;
+    // }
     // else{ $function[0] = $function[0].":"; }
 
 
@@ -139,7 +155,9 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
 
     file_put_contents("test.py", "import sys\n", FILE_APPEND);
-    foreach ($code_lines as $value) { file_put_contents("test.py", $value."\n", FILE_APPEND); }
+    // foreach ($code_lines as $value) { file_put_contents("test.py", $value."\n", FILE_APPEND); }
+
+    foreach ($function as $value) { file_put_contents("test.py", $value."\n", FILE_APPEND); }
 
     // print results to console (if required to edit)
     // $f = explode('def ', $function[0]);
@@ -159,7 +177,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
     // adding the first test case for code testing purposes
     // this is assuming that the test input includes the necessary print files
-    file_put_contents("test.py", "\n".$test_input[0], FILE_APPEND);
+    file_put_contents("test.py", "\n".trim($test_input[0]), FILE_APPEND);
 
     //////////////////
     ////////////////// the part where we kinda run the code to test for the other errors bc they're less obvious
@@ -210,9 +228,9 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 
             // IndentError
             if (strpos($output, 'IndentationError') != false) {
-                $indented_string = " ".$error_line;  // it only throws an indent error if there are zero spaces; even one counts as a proper indent apparently
+                $indented_string = "\t".$error_line;  // it only throws an indent error if there are zero spaces; even one counts as a proper indent apparently
                 $code_lines[$line_number-1] = $indented_string;
-                $autograder_comments = $autograder_comments."DEDUCT ".$points." -- incorrect indentation\n";
+                $autograder_comments = $autograder_comments."DEDUCT ".$points." -- incorrect indentation:\n".$output;
                 $count = $count - 1;            
             }
 
@@ -258,15 +276,15 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
         foreach ($code_lines as $line) { file_put_contents("test.py", $line."\n", FILE_APPEND);}
 
        
-        file_put_contents("test.py", "\n".$test_input[$i], FILE_APPEND); // then add the input afterwards
-        
+        file_put_contents("test.py", "\n".trim($test_input[$i]), FILE_APPEND); // then add the input afterwards
+        // $autograder_comments = $autograder_comments."\nTesting:\n".file_get_contents("test.py")."\n";
         // run the code
         $temp = './test.py';
         $c = escapeshellcmd($temp);
         $output = shell_exec($c);
         if (trim($output) != $test_output[$i]){
             $total_points = $total_points - $point_decrement;
-            $autograder_comments = $autograder_comments."DEDUCT ".$point_decrement." -- Test Case #".$i." did not match. Expected: ".$test_output[$i]." || Actual: ".trim($output)."\n";
+            $autograder_comments = $autograder_comments."DEDUCT ".$point_decrement." -- Test Case #".($i+1)." did not match. Expected: ".$test_output[$i]." || Actual: ".trim($output)."\n";
         }
     }
 
