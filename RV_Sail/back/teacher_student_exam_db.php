@@ -3,8 +3,7 @@
 
     $testid = $_POST['TestID'];
     $ucid = $_POST['UCID'];
-//    $testid = '2';
-//    $ucid = 'sk2292';
+
 
     ($dbh = mysql_connect ($hostname,$username,$password))
             or die("Unable to connect to MySQL database");
@@ -42,8 +41,9 @@
     $out .= "<table>";
 
     $out .= "<tr>";
-    $out .= "<th> Question </th> <th> Your Answer </th> <th> Earned Points </th> <th> Total Points </th><th>  </th>";
+    $out .= "<th> Question </th> <th> Student Answer </th> <th> Earned Points </th> <th> Total Points </th><th>  </th>";
     $out .= "</tr>";
+       
 
     while( $test = mysql_fetch_array($sr))
     {
@@ -65,7 +65,7 @@
             $Deduct =htmlspecialchars($t["Deduct"]);
             $RC =htmlspecialchars($t["RC"]);
             $out .= "<tr>";
-            $out .= "<td align='center'> $Deduct </td><td align='center'> <textarea readonly class='changesToComments codearea' id='$QID' rows='15' cols='200' style='width: 200px; height: 75px; resize: none;'>$RC</textarea>";
+            $out .= "<td align='center'> <input type='text' value='$Deduct' class='changesToPoints' id='$QID'> </td><td align='center'> <textarea class='changesToComments' id='$QID' rows='15' cols='200' style='width: 200px; height: 75px; resize: none;'>$RC</textarea>";
             $out .= "</tr>";
         }
         
@@ -73,23 +73,6 @@
         $out .= "</tr>";
     }
 
-
-/*
-    while( $test = mysql_fetch_array($sr))
-    {
-        $QID =htmlspecialchars($test["QID"]);
-        $QText =htmlspecialchars($test["QText"]);
-        $Points =htmlspecialchars($test["Points"]);
-        $EarnedPts =htmlspecialchars($test["EarnedPts"]);
-        $AnsText =htmlspecialchars($test["AnsText"]);
-        $Comments =htmlspecialchars($test["Comments"]);
-
-
-        $out .= "<tr>";
-        $out .= "<td align='center'> $QText </td> <td align='center'> <textarea readonly class='answerCode' rows='50' cols='300' style='width:450px; height: 150px; resize: none;'>$AnsText</textarea> </td> <td align='center'> $EarnedPts </td> <td align='center'> $Points </td> <td align='center'> <textarea readonly class='changesToComments' id='$QID' rows='50' cols='300' style='width: 300px; height: 150px; resize: none;'>$Comments</textarea> </td>";
-        $out .= "</tr>";
-    }
-*/
     $out .= "</table>";
 
     print $out;

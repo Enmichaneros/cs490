@@ -4,7 +4,7 @@
 <!--        <p style="font-size: 100px;"> Hello</p>-->
         
         <div id="pickExam" class="content">
-            <h2>Grades</h2>
+            <p class="title" align="center">Grades</p>
             <div style="margin-bottom:100px;">
                 <p id="test_dropdown" style="display: inline;"></p>
                 <input type="button" value="Release Scores for Selected Exam" onclick="release()" style="display:inline;">
@@ -34,7 +34,11 @@
                   };
                 
                 
+<<<<<<< HEAD:RV/front/teacher_grades.php
                 xhttp.open("POST","https://web.njit.edu/~sk2292/RV/teacher_get_grades.php");
+=======
+                xhttp.open("POST","https://web.njit.edu/~jj373/RV/teacher_get_grades.php");
+>>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_grades.php
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send();
             }
@@ -53,7 +57,11 @@
                   };
                 
                 
+<<<<<<< HEAD:RV/front/teacher_grades.php
                 xhttp.open("POST","https://web.njit.edu/~sk2292/RV/teacher_get_students.php");
+=======
+                xhttp.open("POST","https://web.njit.edu/~jj373/RV/teacher_get_students.php");
+>>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_grades.php
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("TestID="+testid);
             }
@@ -71,7 +79,11 @@
                   };
                 
                 
+<<<<<<< HEAD:RV/front/teacher_grades.php
                 xhttp.open("POST","https://web.njit.edu/~sk2292/RV/teacher_student_exam.php");
+=======
+                xhttp.open("POST","https://web.njit.edu/~jj373/RV/teacher_student_exam.php");
+>>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_grades.php
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("TestID="+testid+"&UCID="+ucid);
             }
@@ -85,23 +97,12 @@
                 var points_string = "";
                 var comments_string = "";
                 var QID = "";
-                var num_string = "";
-                var num = 0;
-                var QID_change = pointchange[0].id;
                 
                 for (var i = 0; i < pointchange.length; i++) {
-                    if (pointchange[i].id != QID_change) {
-                        num = 0;
-                        QID_change = pointchange[i].id;
-                    }
-                    
                     QID += pointchange[i].id + "```";
                     points_string += pointchange[i].value + "```";
                     comments_string += commentchange[i].value + "```";
-                    num_string += num.toString() + "```";
-                    num += 1;
                 }
-                
                 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
@@ -111,10 +112,13 @@
                   };
                 
                 
+<<<<<<< HEAD:RV/front/teacher_grades.php
                 xhttp.open("POST","https://web.njit.edu/~sk2292/RV/edit_grade.php");
+=======
+                xhttp.open("POST","https://web.njit.edu/~jj373/RV/edit_grade.php");
+>>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_grades.php
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                xhttp.send("UCID="+ucid+"&TestID="+testid+"&QID="+QID+"&EarnedPts="+points_string+"&Comments="+comments_string+"&Num="+num_string);
-                
+                xhttp.send("UCID="+ucid+"&TestID="+testid+"&QID="+QID+"&EarnedPts="+points_string+"&Comments="+comments_string);
             }
             
             function release() {

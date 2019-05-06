@@ -1,24 +1,17 @@
 <?php
 
-    $ucid = isset($_POST['UCID']) ? $_POST['UCID'] : '';
-    $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
-    $qid = isset($_POST['QID']) ? $_POST['QID'] : '';
-    $points = isset($_POST['EarnedPts']) ? $_POST['EarnedPts'] : '';
-    $comments = isset($_POST['Comments']) ? $_POST['Comments'] : '';
-    $num = isset($_POST['Num']) ? $_POST['Num'] : '';
-
+    $diff = isset($_POST['Diff']) ? $_POST['Diff'] : '';
+    $keyword = isset($_POST['Keyword']) ? $_POST['Keyword'] : '';
+    $topic = isset($_POST['Topic']) ? $_POST['Topic'] : '';
 
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~sk2292/RV/edit_grade_middle.php';
+    $url = 'https://web.njit.edu/~sk2292/RV/filter_middle.php';
     $post_data = array(
-        'UCID' => $ucid,
-        'TestID' => $testid,
-        'QID' => $qid,
-        'EarnedPts' => $points,
-        'Comments' => $comments,
-        'Num' => $num,
+        'Diff' => $diff,
+        'Keyword' => $keyword,
+        'Topic' => $topic,
     );
 
     $ch = curl_init();
@@ -32,9 +25,7 @@
     }
     curl_close($ch); //close curl
 
-
     echo $output;
-
 
 ?>
 

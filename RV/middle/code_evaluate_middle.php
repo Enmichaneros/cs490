@@ -1,15 +1,9 @@
 <?php
-//$ucid = $_POST['UCID'];
-//$testid = $_POST['TestID'];
-//$question_ids = explode('```',  $_POST['QID']);
-//$answers = explode('```',  $_POST['Code']);
+$ucid = $_POST['UCID'];
+$testid = $_POST['TestID'];
+$question_ids = explode('```',  $_POST['QID']);
+$answers = explode('```',  $_POST['Code']);
 
-$ucid = 'sk2292';
-$testid = '33';
-$question_ids = ['106', '107', '109',''];
-$answers = ['def fdsa
-	dsf;a','def cx: 
-    dsf','adfsf',''];
 
 ////////////////////////////////////////////
 //////////////////////////////////////////// beginning of for loop for questions
@@ -28,7 +22,8 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     //     'while' => 'false',
     //     'function' => 'thatfunction(n)',
     // );
-
+    $num = 0;
+    
     $code = $answers[$q];
     $original_code = $answers[$q];
     $qid = $question_ids[$q];
@@ -90,6 +85,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     $lenLine = strpos($code, ':');
     if ($lenDef != $lenLine) {
         $total_points = $total_points - floor($point_decrement / 2);
+        $com = "missing colon";
         $autograder_comments = $autograder_comments."DEDUCT ".floor($point_decrement / 2)." -- missing colon\n";
         $insertColon = strpos($code, $function_name);
         if ($insertColon == true) {
@@ -98,6 +94,29 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
             $end = substr($code, $insertColon+1);
             $code = $begin.":".$end;
         }
+        
+        $url = 'https://web.njit.edu/~sk2292/RV/add_resulttc_db.php';
+        $post_data = array(
+            'UCID' => $ucid,
+            'QID' => $qid,
+            'TestID' => $testid,
+            'Num' => $num,
+            'Deduct' => floor($point_decrement / 2), // the original code, not the one used to run the test cases
+            'RC' => $com,
+        );
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+        $output = curl_exec($ch);
+        if ($output == FALSE){
+            echo "2cURL error: " . curl_error($ch);
+        }
+        curl_close($ch);
+        $num += 1;
     }
     
     
@@ -114,8 +133,32 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     // $autograder_comments = $autograder_comments."Testing function name... >>>>>>";
     if ($function[0] != $actual){
         $total_points = $total_points - floor($point_decrement / 2);
+        $com = "incorrect function name";
         $autograder_comments = $autograder_comments."DEDUCT ".floor($point_decrement / 2)." -- incorrect function name\n";
         $function[0] = $actual.":";
+        
+        $url = 'https://web.njit.edu/~sk2292/RV/add_resulttc_db.php';
+        $post_data = array(
+            'UCID' => $ucid,
+            'QID' => $qid,
+            'TestID' => $testid,
+            'Num' => $num,
+            'Deduct' => floor($point_decrement / 2), // the original code, not the one used to run the test cases
+            'RC' => $com,
+        );
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+        $output = curl_exec($ch);
+        if ($output == FALSE){
+            echo "2cURL error: " . curl_error($ch);
+        }
+        curl_close($ch);
+        $num += 1;
     }
     else{
         $function[0] = $function[0].":";
@@ -156,22 +199,122 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     // TODO: question_info also needs to store/be able to retrieve if a question requires a for loop
     if ($uses_for == 'true'){ 
         if (strpos($code, 'for') == false) {
-            $autograder_comments = $autograder_comments."FLAG -- Does not contain for loop when specified\n";
+            $total_points = $total_points - floor($point_decrement / 2);
+            $autograder_comments = $autograder_comments."DEDUCT ".floor($point_decrement / 2)." -- Does not contain for loop when specified\n";
+            
+            $com = "Does not contain for loop when specified";
+            $url = 'https://web.njit.edu/~sk2292/RV/add_resulttc_db.php';
+            $post_data = array(
+                'UCID' => $ucid,
+                'QID' => $qid,
+                'TestID' => $testid,
+                'Num' => $num,
+                'Deduct' => floor($point_decrement / 2), //the original code, not the one used to run the test cases
+                'RC' => $com,
+            );
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+            $output = curl_exec($ch);
+            if ($output == FALSE){
+                echo "2cURL error: " . curl_error($ch);
+            }
+            curl_close($ch);
+            $num += 1;
         } 
     }
     if ($uses_while == 'true'){ 
         if (strpos($code, 'while') == false) {
-            $autograder_comments = $autograder_comments."FLAG -- Does not contain while loop when specified\n";
+            $total_points = $total_points - floor($point_decrement / 2);
+            $autograder_comments = $autograder_comments."DEDUCT ".floor($point_decrement / 2)." -- Does not contain while loop when specified\n";
+            
+            $com = "Does not contain while loop when specified";
+            $url = 'https://web.njit.edu/~sk2292/RV/add_resulttc_db.php';
+            $post_data = array(
+                'UCID' => $ucid,
+                'QID' => $qid,
+                'TestID' => $testid,
+                'Num' => $num,
+                'Deduct' => floor($point_decrement / 2), //the original code, not the one used to run the test cases
+                'RC' => $com,
+            );
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+            $output = curl_exec($ch);
+            if ($output == FALSE){
+                echo "2cURL error: " . curl_error($ch);
+            }
+            curl_close($ch);
+            $num += 1;
         } 
     }
     if ($uses_return == 'true'){ 
         if (strpos($code, 'return') == false) {
-            $autograder_comments = $autograder_comments."FLAG -- Does not contain return statement when specified\n";
+            $total_points = $total_points - floor($point_decrement / 2);
+            $autograder_comments = $autograder_comments."DEDUCT ".floor($point_decrement / 2)." -- Does not contain return statement when specified\n";
+            
+            $com = "Does not contain return statement when specified";
+            $url = 'https://web.njit.edu/~sk2292/RV/add_resulttc_db.php';
+            $post_data = array(
+                'UCID' => $ucid,
+                'QID' => $qid,
+                'TestID' => $testid,
+                'Num' => $num,
+                'Deduct' => floor($point_decrement / 2), //the original code, not the one used to run the test cases
+                'RC' => $com,
+            );
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+            $output = curl_exec($ch);
+            if ($output == FALSE){
+                echo "2cURL error: " . curl_error($ch);
+            }
+            curl_close($ch);
+            $num += 1;
         } 
     }
     if ($uses_print == 'true'){ 
         if (strpos($code, 'print') == false) {
-            $autograder_comments = $autograder_comments."FLAG -- Does not contain print statement when specified\n";
+            $total_points = $total_points - floor($point_decrement / 2);
+            $autograder_comments = $autograder_comments."DEDUCT ".floor($point_decrement / 2)." -- Does not contain print statement when specified\n";
+            
+            $com = "Does not contain print statement when specified";
+            $url = 'https://web.njit.edu/~sk2292/RV/add_resulttc_db.php';
+            $post_data = array(
+                'UCID' => $ucid,
+                'QID' => $qid,
+                'TestID' => $testid,
+                'Num' => $num,
+                'Deduct' => floor($point_decrement / 2), //the original code, not the one used to run the test cases
+                'RC' => $com,
+            );
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+            $output = curl_exec($ch);
+            if ($output == FALSE){
+                echo "2cURL error: " . curl_error($ch);
+            }
+            curl_close($ch);
+            $num += 1;
         } 
     }
 
@@ -299,8 +442,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
         file_put_contents("test.py", ""); // first input nothing, to rewrite the file just in case
         // then rewrite each line from the base code
         foreach ($code_lines as $line) { file_put_contents("test.py", $line."\n", FILE_APPEND);}
-
-       
+        
         file_put_contents("test.py", "\n".trim($test_input[$i]), FILE_APPEND); // then add the input afterwards
         // $autograder_comments = $autograder_comments."\nTesting:\n".file_get_contents("test.py")."\n";
         // run the code
@@ -318,7 +460,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
                 'UCID' => $ucid,
                 'QID' => $qid,
                 'TestID' => $testid,
-                'Num' => $i,
+                'Num' => $num,
                 'Deduct' => $point_decrement, // the original code, not the one used to run the test cases
                 'RC' => $com,
             );
@@ -334,7 +476,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
                 echo "2cURL error: " . curl_error($ch);
             }
             curl_close($ch);
-            echo $output;
+            $num += 1;
         }
     }
 
@@ -352,7 +494,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
 //    echo $ucid . "<br>" . $qid . "<br>" . $testid . "<br>" . $total_points . "<br>" . $code . "<br>" . $comments. "<br>";
     
     $end_code = file_get_contents("test.py"); // for debugging purposes
-    
+
     $post_data = array(
         'UCID' => $ucid,
         'QID' => $qid,

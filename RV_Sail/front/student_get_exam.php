@@ -2,23 +2,13 @@
 
     $ucid = isset($_POST['UCID']) ? $_POST['UCID'] : '';
     $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
-    $qid = isset($_POST['QID']) ? $_POST['QID'] : '';
-    $points = isset($_POST['EarnedPts']) ? $_POST['EarnedPts'] : '';
-    $comments = isset($_POST['Comments']) ? $_POST['Comments'] : '';
-    $num = isset($_POST['Num']) ? $_POST['Num'] : '';
-
-
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~sk2292/RV/edit_grade_middle.php';
+    $url = 'https://web.njit.edu/~sk2292/RV/student_get_exam_middle.php';
     $post_data = array(
         'UCID' => $ucid,
         'TestID' => $testid,
-        'QID' => $qid,
-        'EarnedPts' => $points,
-        'Comments' => $comments,
-        'Num' => $num,
     );
 
     $ch = curl_init();
@@ -32,9 +22,7 @@
     }
     curl_close($ch); //close curl
 
-
     echo $output;
-
 
 ?>
 

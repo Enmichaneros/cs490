@@ -85,23 +85,12 @@
                 var points_string = "";
                 var comments_string = "";
                 var QID = "";
-                var num_string = "";
-                var num = 0;
-                var QID_change = pointchange[0].id;
                 
                 for (var i = 0; i < pointchange.length; i++) {
-                    if (pointchange[i].id != QID_change) {
-                        num = 0;
-                        QID_change = pointchange[i].id;
-                    }
-                    
                     QID += pointchange[i].id + "```";
                     points_string += pointchange[i].value + "```";
                     comments_string += commentchange[i].value + "```";
-                    num_string += num.toString() + "```";
-                    num += 1;
                 }
-                
                 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
@@ -113,8 +102,7 @@
                 
                 xhttp.open("POST","https://web.njit.edu/~sk2292/RV/edit_grade.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                xhttp.send("UCID="+ucid+"&TestID="+testid+"&QID="+QID+"&EarnedPts="+points_string+"&Comments="+comments_string+"&Num="+num_string);
-                
+                xhttp.send("UCID="+ucid+"&TestID="+testid+"&QID="+QID+"&EarnedPts="+points_string+"&Comments="+comments_string);
             }
             
             function release() {

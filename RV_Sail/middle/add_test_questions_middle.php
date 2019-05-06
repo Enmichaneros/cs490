@@ -1,23 +1,18 @@
 <?php
-    
-    $ucid = $_POST['UCID'];
-    $testid = $_POST['TestID'];
+    $testname = $_POST['TestName'];
     $qid = $_POST['QID'];
-    $points = $_POST['EarnedPts'];
-    $comments = $_POST['Comments'];
-    $num = $_POST['Num'];
+    $points = $_POST['Points'];
+    $totalpoints = $_POST['TotalPoints'];
 
 
     //posting with curl to SQL
 
-    $url = 'https://web.njit.edu/~sk2292/RV/edit_grade_db.php';
+    $url = 'https://web.njit.edu/~sk2292/RV/add_test_questions_db.php';
     $post_data = array(
-        'UCID' => $ucid,
-        'TestID' => $testid,
+        'TestName' => $testname,
         'QID' => $qid,
-        'EarnedPts' => $points,
-        'Comments' => $comments,
-        'Num' => $num,
+        'Points' => $points,
+        'TotalPoints' => $totalpoints,
     );
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url); // url to send to
