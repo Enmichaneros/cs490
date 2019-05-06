@@ -12,8 +12,8 @@
 </head>
 <body>
 	<div class="navbar">
-            <a href="https://web.njit.edu/~sk2292/RV/student_exam.php">Exam</a>
-            <a href="https://web.njit.edu/~sk2292/RV/student_grades.php">Grades</a>
+            <a href="https://web.njit.edu/~jj373/RV/student_exam.php">Exam</a>
+            <a href="https://web.njit.edu/~jj373/RV/student_grades.php">Grades</a>
             <?php
                 if (isset($_SESSION['username'])) {                    
 				    echo '<form action="includes/logout.inc.php" method="POST">

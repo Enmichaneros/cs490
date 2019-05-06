@@ -1,15 +1,13 @@
 <?php
 
     $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
-    $ucid = isset($_POST['UCID']) ? $_POST['UCID'] : '';
 
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~sk2292/RV/teacher_student_exam_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RC/teacher_get_students_middle.php';
     $post_data = array(
         'TestID' => $testid,
-        'UCID' => $ucid,
     );
 
     $ch = curl_init();

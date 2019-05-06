@@ -1,19 +1,15 @@
 <?php
 
-    $testname = isset($_POST['TestName']) ? $_POST['TestName'] : '';
-    $qid = isset($_POST['QID']) ? $_POST['QID'] : '';
-    $points = isset($_POST['Points']) ? $_POST['Points'] : '';
-    $totalpoints = isset($_POST['TotalPoints']) ? $_POST['TotalPoints'] : '';
+    $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
+    $ucid = isset($_POST['UCID']) ? $_POST['UCID'] : '';
 
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~sk2292/RV/add_test_questions_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RC/teacher_student_exam_middle.php';
     $post_data = array(
-        'TestName' => $testname,
-        'QID' => $qid,
-        'Points' => $points,
-        'TotalPoints' => $totalpoints,
+        'TestID' => $testid,
+        'UCID' => $ucid,
     );
 
     $ch = curl_init();
@@ -27,9 +23,7 @@
     }
     curl_close($ch); //close curl
 
-
     echo $output;
-
 
 ?>
 

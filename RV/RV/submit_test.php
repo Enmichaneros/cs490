@@ -1,15 +1,19 @@
 <?php
 
-
+    $ucid = isset($_POST['UCID']) ? $_POST['UCID'] : '';
     $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
-
+    $qid = isset($_POST['QID']) ? $_POST['QID'] : '';
+    $code = isset($_POST['Code']) ? $_POST['Code'] : '';
+    
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~sk2292/RV/exam_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RC/code_evaluate_middle.php';
     $post_data = array(
+        'UCID' => $ucid,
         'TestID' => $testid,
-
+        'QID' => $qid,
+        'Code' => $code,
     );
 
     $ch = curl_init();
@@ -19,11 +23,12 @@
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
     $output = curl_exec($ch); //execute request and fetch response
     if ($output == FALSE){ //check if request successful
-        echo "cURL error: " . curl_error($ch);
+        echo "1cURL error: " . curl_error($ch);
     }
     curl_close($ch); //close curl
 
     echo $output;
+
 ?>
 
 

@@ -25,9 +25,7 @@
                       this.responseText;
                     }
                   };
-
-
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/show_exams.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/show_exams.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send();  
             }
@@ -55,8 +53,7 @@
                         }
                       };
 
-
-                    xhttp.open("POST","https://web.njit.edu/~sk2292/RV/exam.php");
+                    xhttp.open("POST","https://web.njit.edu/~jj373/RC/exam.php");
                     xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                     xhttp.send("TestID="+testid);
                     document.getElementById("show_exam_content").innerHTML = "<input type='button' value='Submit Test' onclick='submitTest()'>";
@@ -91,8 +88,7 @@
                     }
                   };
 
-
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/submit_test.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/submit_test.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("UCID="+ucid+"&TestID="+testid+"&QID="+QID+"&Code="+code);
             }

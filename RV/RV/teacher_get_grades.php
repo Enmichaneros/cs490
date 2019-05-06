@@ -1,13 +1,16 @@
 <?php
 
-//    $status = isset($_POST['Status']) ? $_POST['Status'] : '';
-    
+//    $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
+
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~sk2292/RV/show_exams_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RC/teacher_get_grades_middle.php';
 //    $post_data = array(
-//        'Status' => $status,
+//        'UCID' => $ucid,
+//        'TestID' => $testid,
+//        'QID' => $qid,
+//        'Code' => $code,
 //    );
 
     $ch = curl_init();

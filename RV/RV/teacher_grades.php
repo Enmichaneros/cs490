@@ -4,7 +4,7 @@
 <!--        <p style="font-size: 100px;"> Hello</p>-->
         
         <div id="pickExam" class="content">
-            <h2>Grades</h2>
+            <p class="title" align="center">Grades</p>
             <div style="margin-bottom:100px;">
                 <p id="test_dropdown" style="display: inline;"></p>
                 <input type="button" value="Release Scores for Selected Exam" onclick="release()" style="display:inline;">
@@ -34,7 +34,7 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/teacher_get_grades.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/teacher_get_grades.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send();
             }
@@ -53,7 +53,7 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/teacher_get_students.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/teacher_get_students.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("TestID="+testid);
             }
@@ -71,7 +71,7 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/teacher_student_exam.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/teacher_student_exam.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("TestID="+testid+"&UCID="+ucid);
             }
@@ -100,7 +100,7 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/edit_grade.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/edit_grade.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("UCID="+ucid+"&TestID="+testid+"&QID="+QID+"&EarnedPts="+points_string+"&Comments="+comments_string);
             }
@@ -116,7 +116,7 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/release_grades.php");
+                xhttp.open("POST","https://web.njit.edu/~sk2292/RC/release_grades.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("TestID="+testid);
             }
