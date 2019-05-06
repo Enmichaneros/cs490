@@ -7,7 +7,7 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~mbr23/RC/filter_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RV/filter_middle.php';
     $post_data = array(
         'Diff' => $diff,
         'Keyword' => $keyword,

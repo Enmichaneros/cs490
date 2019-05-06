@@ -5,7 +5,7 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~mbr23/RC/show_exams_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RV/show_exams_middle.php';
 //    $post_data = array(
 //        'Status' => $status,
 //    );
