@@ -1,10 +1,22 @@
+<?php 
+	include_once 'teacherheader.php';
+ ?>
+
         <div class="content">
+            <div class="split left">
+                <h2 style="margin-left: 10px;">Filter Questions</h2>
+                <div style="text-align: center;">
                     <p style="display: inline; padding-right: 70px;">Difficulty</p>
                     <p style="display: inline; padding-right: 100px;">Topic</p>
                     <p style="display: inline; padding-right: 125px;">Keyword</p>
+                </div>
+                <div style="text-align: center;">
                     <div style="display: inline; padding-right: 35px;">
                         <select id="difficulty">
+                            <option value="easy">Easy</option>
                             <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                            <option value="allDifficulty">All</option>
                         </select>
                     </div>
                     <div style="display: inline; padding-right: 35px;">
