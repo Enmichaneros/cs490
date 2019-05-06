@@ -57,7 +57,6 @@
                     <div style="text-align: center; padding-top: 20px;">
                         <p style="display: inline;">Difficulty</p>
                         <p style="display: inline; padding-left: 90px; padding-right: 120px; ">Topic</p>
-                        <p style="display: inline;">Keyword</p>
                     </div>
                     <div style="text-align: center; padding-bottom: 30px;">
                         <div style="display: inline;">
@@ -84,9 +83,7 @@
                                 <option value="allTopics">All</option>
                             </select>
                         </div>
-                        <div style="display: inline;">
-                            <input type="text" placeholder="Keyword" id="keyword_addQuestion"/>
-                        </div>
+     
                     </div>
                     
                     <div style="text-align: center; padding-bottom: 20px;">
@@ -148,7 +145,7 @@
                 
                 
                 //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~jj373/RC/filter.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RV/filter.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic);
 
@@ -185,9 +182,9 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~jj373/RC/add_questions.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RV/add_questions.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                xhttp.send("QText="+QText+"&FuncName="+FuncName+"&Input="+Input+"&Output="+Output+"&Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic+"&ForLoop="+ForLoop+"&WhileLoop="+WhileLoop+"&Return="+Return+"&Print="+Print);
+                xhttp.send("QText="+QText+"&FuncName="+FuncName+"&Input="+Input+"&Output="+Output+"&Diff="+Diff+"&Topic="+Topic+"&ForLoop="+ForLoop+"&WhileLoop="+WhileLoop+"&Return="+Return+"&Print="+Print);
             }
         </script>
 <?php 

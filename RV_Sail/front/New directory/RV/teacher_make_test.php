@@ -93,7 +93,7 @@
                 
                 
                 //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~jj373/RC/filter.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RV/filter.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic);
 
@@ -121,7 +121,7 @@
                 
                 
                 //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~jj373/RC/select_questions.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RV/select_questions.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("QID="+QID);
 
@@ -156,7 +156,7 @@
                 
                 
                 //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~jj373/RC/add_test_questions.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RV/add_test_questions.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("TestName="+TestName+"&QID="+QID+"&Points="+Points+"&TotalPoints="+TotalPoints);
 

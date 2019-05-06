@@ -5,7 +5,7 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~mbr23/RC/login_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RV/login_middle.php';
     $post_data = array(
         'username' => $username,
         'password' => $password,

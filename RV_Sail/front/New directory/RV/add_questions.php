@@ -6,7 +6,7 @@
     $input = isset($_POST['Input']) ? $_POST['Input'] : '';
     $output = isset($_POST['Output']) ? $_POST['Output'] : '';
     $diff = isset($_POST['Diff']) ? $_POST['Diff'] : '';
-    $keyword = isset($_POST['Keyword']) ? $_POST['Keyword'] : '';
+//    $keyword = isset($_POST['Keyword']) ? $_POST['Keyword'] : '';
     $topic = isset($_POST['Topic']) ? $_POST['Topic'] : '';
     $forloop = isset($_POST['ForLoop']) ? $_POST['ForLoop'] : '';
     $whileloop = isset($_POST['WhileLoop']) ? $_POST['WhileLoop'] : '';
@@ -17,14 +17,14 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~mbr23/RC/add_questions_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RV/add_questions_middle.php';
     $post_data = array(
         'QText' => $qtext,
         'FuncName' => $funcname,
         'Input' => $input,
         'Output' => $output,
         'Diff' => $diff,
-        'Keyword' => $keyword,
+//        'Keyword' => $keyword,
         'Topic' => $topic,
         'ForLoop' => $forloop,
         'WhileLoop' => $whileloop,

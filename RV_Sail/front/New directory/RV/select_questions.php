@@ -6,7 +6,7 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~mbr23/RC/select_questions_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RV/select_questions_middle.php';
     $post_data = array(
         'QID' => $qid,
 
