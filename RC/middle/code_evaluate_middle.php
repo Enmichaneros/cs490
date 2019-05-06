@@ -275,7 +275,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
         // then rewrite each line from the base code
         foreach ($code_lines as $line) { file_put_contents("test.py", $line."\n", FILE_APPEND);}
 
-       
+        echo "testinput: ".$test_input[$i];
         file_put_contents("test.py", "\n".trim($test_input[$i]), FILE_APPEND); // then add the input afterwards
         // $autograder_comments = $autograder_comments."\nTesting:\n".file_get_contents("test.py")."\n";
         // run the code
