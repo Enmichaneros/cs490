@@ -34,11 +34,11 @@
                   };
                 
                 
-<<<<<<< HEAD:RV/front/teacher_grades.php
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/teacher_get_grades.php");
-=======
+// <<<<<<< HEAD:RV/front/teacher_grades.php
+//                 xhttp.open("POST","https://web.njit.edu/~sk2292/RV/teacher_get_grades.php");
+// =======
                 xhttp.open("POST","https://web.njit.edu/~jj373/RV/teacher_get_grades.php");
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_grades.php
+// >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_grades.php
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send();
             }

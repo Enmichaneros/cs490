@@ -93,11 +93,11 @@
                 
                 
                 //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-<<<<<<< HEAD:RV/front/teacher_make_test.php
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/filter.php");
-=======
+// <<<<<<< HEAD:RV/front/teacher_make_test.php
+//                 xhttp.open("POST","https://web.njit.edu/~sk2292/RV/filter.php");
+// =======
                 xhttp.open("POST","https://web.njit.edu/~jj373/RV/filter.php");
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_make_test.php
+// >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_make_test.php
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic);
 

@@ -438,7 +438,7 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
     ////////////////// the part where we actually run the code for all the test cases
     //////////////////
 
-    for ($i = 0; $i < sizeof($test_input); $i++){
+    for ($i = 0; $i < sizeof($test_input) - 1; $i++){
         file_put_contents("test.py", ""); // first input nothing, to rewrite the file just in case
         // then rewrite each line from the base code
         foreach ($code_lines as $line) { file_put_contents("test.py", $line."\n", FILE_APPEND);}
@@ -462,6 +462,34 @@ for ($q = 0; $q < sizeof($question_ids)-1; $q++){
                 'TestID' => $testid,
                 'Num' => $num,
                 'Deduct' => $point_decrement, // the original code, not the one used to run the test cases
+                'RC' => $com,
+            );
+            
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+
+            $output = curl_exec($ch);
+            if ($output == FALSE){
+                echo "2cURL error: " . curl_error($ch);
+            }
+            curl_close($ch);
+            $num += 1;
+        }
+        else{
+            // $total_points = $total_points - $point_decrement;
+            $com = "Test Case #".($i+1)." matched. Expected: ".$test_output[$i]." || Actual: ".trim($output);
+            // $autograder_comments = $autograder_comments."DEDUCT ".$point_decrement." -- ".$com."\n";
+            
+            $url = 'https://web.njit.edu/~sk2292/RV/add_resulttc_db.php';
+            $post_data = array(
+                'UCID' => $ucid,
+                'QID' => $qid,
+                'TestID' => $testid,
+                'Num' => $num,
+                'Deduct' => 0, // the original code, not the one used to run the test cases
                 'RC' => $com,
             );
             

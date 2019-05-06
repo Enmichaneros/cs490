@@ -25,11 +25,11 @@
                       this.responseText;
                     }
                   };
-<<<<<<< HEAD:RV/front/student_exam.php
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/show_exams.php");
-=======
+// <<<<<<< HEAD:RV/front/student_exam.php
+                // xhttp.open("POST","https://web.njit.edu/~sk2292/RV/show_exams.php");
+// =======
                 xhttp.open("POST","https://web.njit.edu/~jj373/RV/show_exams.php");
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/student_exam.php
+// >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/student_exam.php
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send();  
             }
@@ -57,11 +57,11 @@
                         }
                       };
 
-<<<<<<< HEAD:RV/front/student_exam.php
-                    xhttp.open("POST","https://web.njit.edu/~sk2292/RV/exam.php");
-=======
+// <<<<<<< HEAD:RV/front/student_exam.php
+//                     xhttp.open("POST","https://web.njit.edu/~sk2292/RV/exam.php");
+// =======
                     xhttp.open("POST","https://web.njit.edu/~jj373/RV/exam.php");
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/student_exam.php
+// >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/student_exam.php
                     xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                     xhttp.send("TestID="+testid);
                     document.getElementById("show_exam_content").innerHTML = "<input type='button' value='Submit Test' onclick='submitTest()'>";

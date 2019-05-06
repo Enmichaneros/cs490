@@ -56,11 +56,11 @@
                     
                     <div style="text-align: center; padding-top: 20px;">
                         <p style="display: inline;">Difficulty</p>
-<<<<<<< HEAD:RV/front/teacher_add_questions.php
+<!-- <<<<<<< HEAD:RV/front/teacher_add_questions.php -->
                         <p style="display: inline; padding-left: 80px; padding-right: 80px; ">Topic</p>
-=======
+<!-- ======= -->
                         <p style="display: inline; padding-left: 90px; padding-right: 120px; ">Topic</p>
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_add_questions.php
+<!-- >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_add_questions.php -->
                     </div>
                     <div style="text-align: center; padding-bottom: 30px;">
                         <div style="display: inline;">
@@ -87,10 +87,10 @@
                                 <option value="allTopics">All</option>
                             </select>
                         </div>
-<<<<<<< HEAD:RV/front/teacher_add_questions.php
+<!-- <<<<<<< HEAD:RV/front/teacher_add_questions.php
 =======
      
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_add_questions.php
+>>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_add_questions.php -->
                     </div>
                     
                     <div style="text-align: center; padding-bottom: 20px;">
@@ -152,11 +152,11 @@
                 
                 
                 //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-<<<<<<< HEAD:RV/front/teacher_add_questions.php
-                xhttp.open("POST","https://web.njit.edu/~sk2292/RV/filter.php");
-=======
+// <<<<<<< HEAD:RV/front/teacher_add_questions.php
+                // xhttp.open("POST","https://web.njit.edu/~sk2292/RV/filter.php");
+// =======
                 xhttp.open("POST","https://web.njit.edu/~jj373/RV/filter.php");
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_add_questions.php
+// >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_add_questions.php
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic);
 
@@ -192,11 +192,11 @@
                   };
                 
                 
-<<<<<<< HEAD:RV/front/teacher_add_questions.php
+// <<<<<<< HEAD:RV/front/teacher_add_questions.php
                 xhttp.open("POST","https://web.njit.edu/~sk2292/RV/add_questions.php");
-=======
-                xhttp.open("POST","https://web.njit.edu/~jj373/RV/add_questions.php");
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_add_questions.php
+// =======
+                // xhttp.open("POST","https://web.njit.edu/~jj373/RV/add_questions.php");
+// >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/teacher_add_questions.php
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("QText="+QText+"&FuncName="+FuncName+"&Input="+Input+"&Output="+Output+"&Diff="+Diff+"&Topic="+Topic+"&ForLoop="+ForLoop+"&WhileLoop="+WhileLoop+"&Return="+Return+"&Print="+Print);
             }

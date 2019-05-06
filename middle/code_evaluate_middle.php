@@ -1,66 +1,9 @@
 <?php
-// _POST values, assuming a single question
-// TODO: redesign how to take in the questions and send results to back-end
-// will probably be an array of questions? will have to see how front-end designs the question form
-// (though they are probably waiting on you too...)
+
 $ucid = $_POST['UCID'];
 // is an array of all the code strings
 // $code = $_POST['code']; // will be a string separated by '```'
 $testid = $_POST['TestID'];
-
-// inputs are put into one string
-// outputs are put into one string
-// split by comma
-// explode and then create 
-
-// TODO: php file that connects to backend and retrieves questions, in order of QID
-// $url = https://web.njit.edu/~sk2292/Beta/get_questions_db.php
-// $post_data = array(
-//     'ucid' => $ucid,
-//     'TestID' => $testid,
-// );
-// $ch = curl_init();
-// curl_setopt($ch, CURLOPT_URL, $url); // url to send to
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //return output instead of printing
-// curl_setopt($ch, CURLOPT_POST, 1); //posting
-// curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
-
-// $question_ids = curl_exec($ch); //execute request and fetch response
-// if ($question_ids == FALSE){ //check if request successful
-//     echo "cURL error: " . curl_error($ch);
-// }
-// curl_close($ch); //close curl
-
-
-
-////////////////////////////////////////////
-//////////////////////////////////////////// beginning of for loop for questions
-////////////////////////////////////////////
-// for (length of question_ids)
-
-// TODO: update url
-// TODO: assume this will be an array of testcases instead
-// $url = 'https://web.njit.edu/~sk2292/Beta/get_testcases_db.php';
-// $post_data = array(
-//     'QID' => $qid,
-//     'TestID' => $testid,
-// );
-// $ch = curl_init();
-// curl_setopt($ch, CURLOPT_URL, $url); // url to send to
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //return output instead of printing
-// curl_setopt($ch, CURLOPT_POST, 1); //posting
-// curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
-
-// $question_info = curl_exec($ch); //execute request and fetch response
-// if ($question_info == FALSE){ //check if request successful
-//     echo "cURL error: " . curl_error($ch);
-// }
-// curl_close($ch); //close curl
-
-// grab the values from the database
-// these will probably be arrays, but make sure you have the right format
-// TODO: these will be comma separated values
-
 
 // dummy question_info values
 $code = "def thatfunction(item):\nprint(True)";
@@ -82,6 +25,10 @@ $max_points = intval($question_info['points']);
 $total_points = intval($question_info['points']);
 
 $point_decrement = $total_points / sizeof($test_input);
+$uses_for = $question_info['for'];
+$uses_while = $question_info['while'];
+$uses_print = $question_info['print'];
+$uses_return = $question_info['return'];
 
 
 // writing the file and making it executable, hosted onto my personal njit server, so is a local file
@@ -110,12 +57,12 @@ $actual = 'def '.$function_name;
 
 // $autograder_comments = $autograder_comments."Testing function name... >>>>>>";
 if ($function[0] != $actual){
-	$total_points = $total_points - ($point_decrement / 10);
+    $total_points = $total_points - ($point_decrement / 10);
     $autograder_comments = $autograder_comments."DEDUCT ".($max_points / 10)." -- incorrect function name\n";
-	$function[0] = $actual.":";
+    $function[0] = $actual.":";
 }
 else{
-	$function[0] = $function[0].":";
+    $function[0] = $function[0].":";
 }
 
 //////////////////
@@ -131,17 +78,13 @@ if ($question_info['for'] == true){
 }
 
 //////////////////
-////////////////// print syntax error (naive implementation)
-//////////////////
-
-//////////////////
 ////////////////// TODO: switch if code uses for and if uses print
 //////////////////
 
 
 file_put_contents("test.py", "import sys\n", FILE_APPEND);
 foreach ($function as $value) {
-	file_put_contents("test.py", $value, FILE_APPEND);
+    file_put_contents("test.py", $value, FILE_APPEND);
 }
 
 // writing the print function to output results, since the question is only to write the function normally
@@ -259,9 +202,6 @@ while ($has_errors && $fixable){
 
 
 // running test cases
-// TODO: make sure this works as an array of testcases, and/or see how they're being sent back as responses
-// TODO: nah, no point in starting it at 1 instead of 0. run them all not assuming anything.
-// $autograder_comments = $autograder_comments."Running test cases... >>>>>>";
 for ($i = 0; $i < sizeof($test_input); $i++){
     $temp = './test.py '.$test_input[$i];
     $c = escapeshellcmd($temp);
@@ -275,37 +215,8 @@ for ($i = 0; $i < sizeof($test_input); $i++){
 
 $total_points = max($total_points, 0); // make sure it's not a negative number after all of the deductions
 
-// submitting results back to database
-// TODO: this part **should** largely remain the same, shouldn't have to change
-// actually since we add the questions to the database, will need to see how that's formatted too
-// the important part, of course, is to make sure the error checking works for one question
-// then we can scale! yay!
-$url = 'https://web.njit.edu/~sk2292/Beta/add_results_db.php';
+// Not sending, since this is purely for testing purposes.
 
-// this will have to be an array of arrays
-
-// $post_data = array(
-//     'UCID' => $ucid,
-//     'QID' => $qid,
-//     'TestID' => $testid,
-//     'EarnedPts' => $total_points,
-//     'AnsText' => $code,
-//     'Comments' => $autograder_comments,
-// );
-// $ch = curl_init();
-// curl_setopt($ch, CURLOPT_URL, $url); // url to send to
-// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //return output instead of printing
-// curl_setopt($ch, CURLOPT_POST, 1); //posting
-// curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
-
-// $question_info = curl_exec($ch); //execute request and fetch response
-// if ($output == FALSE){ //check if request successful
-//     echo "cURL error: " . curl_error($ch);
-// }
-// curl_close($ch); //close curl
-
-// send something back to front-end -- success/failure maybe? idk
-// echo 'Success';
 
 echo "Total points: ".$total_points."/".$max_points."   ".$autograder_comments;
 

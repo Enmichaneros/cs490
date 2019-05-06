@@ -6,10 +6,10 @@
     $input = isset($_POST['Input']) ? $_POST['Input'] : '';
     $output = isset($_POST['Output']) ? $_POST['Output'] : '';
     $diff = isset($_POST['Diff']) ? $_POST['Diff'] : '';
-<<<<<<< HEAD:RV/front/add_questions.php
-=======
+// <<<<<<< HEAD:RV/front/add_questions.php
+// =======
 //    $keyword = isset($_POST['Keyword']) ? $_POST['Keyword'] : '';
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/add_questions.php
+// >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/add_questions.php
     $topic = isset($_POST['Topic']) ? $_POST['Topic'] : '';
     $forloop = isset($_POST['ForLoop']) ? $_POST['ForLoop'] : '';
     $whileloop = isset($_POST['WhileLoop']) ? $_POST['WhileLoop'] : '';
@@ -20,21 +20,21 @@
 
     //posting with curl
 
-<<<<<<< HEAD:RV/front/add_questions.php
-    $url = 'https://web.njit.edu/~sk2292/RV/add_questions_middle.php';
-=======
+// <<<<<<< HEAD:RV/front/add_questions.php
+    // $url = 'https://web.njit.edu/~sk2292/RV/add_questions_middle.php';
+// =======
     $url = 'https://web.njit.edu/~mbr23/RV/add_questions_middle.php';
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/add_questions.php
+// >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/add_questions.php
     $post_data = array(
         'QText' => $qtext,
         'FuncName' => $funcname,
         'Input' => $input,
         'Output' => $output,
         'Diff' => $diff,
-<<<<<<< HEAD:RV/front/add_questions.php
-=======
+// <<<<<<< HEAD:RV/front/add_questions.php
+// =======
 //        'Keyword' => $keyword,
->>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/add_questions.php
+// >>>>>>> 2fa4f1ddaa61dd9a509b42a799b68e79b95a6eb0:RV/RV/add_questions.php
         'Topic' => $topic,
         'ForLoop' => $forloop,
         'WhileLoop' => $whileloop,
