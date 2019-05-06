@@ -1,23 +1,20 @@
 <?php
 
-//    $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
+    $testid = isset($_POST['TestID']) ? $_POST['TestID'] : '';
 
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~mbr23/RV/teacher_get_grades_middle.php';
-//    $post_data = array(
-//        'UCID' => $ucid,
-//        'TestID' => $testid,
-//        'QID' => $qid,
-//        'Code' => $code,
-//    );
+    $url = 'https://web.njit.edu/~mbr23/RC/teacher_get_students_middle.php';
+    $post_data = array(
+        'TestID' => $testid,
+    );
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url); // url to send to
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //return output instead of printing
     curl_setopt($ch, CURLOPT_POST, 1); //posting
-//    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data); //add post variables to request
     $output = curl_exec($ch); //execute request and fetch response
     if ($output == FALSE){ //check if request successful
         echo "1cURL error: " . curl_error($ch);

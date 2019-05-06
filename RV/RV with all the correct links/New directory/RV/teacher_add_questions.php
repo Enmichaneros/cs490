@@ -52,11 +52,12 @@
                     <p style="text-align: center;">Enter Question: </p>
                     <p style="padding-bottom: 10px; text-align:center; padding-top: 0px;"><textarea id="question_addQuestion" class = "codearea" cols="50" rows="8"></textarea></p>
                     
-                    <p style="text-align: center; display: inline; text-align: center;">Function Name: </p><input style="display: inline;" type="text" placeholder="Function Name" id="funcName_addQuestion"/>
+                    <p style="text-align: center; display: inline; padding-left: 200px;">Function Name: </p><input style="display: inline;" type="text" placeholder="Function Name" id="funcName_addQuestion"/>
                     
                     <div style="text-align: center; padding-top: 20px;">
                         <p style="display: inline;">Difficulty</p>
                         <p style="display: inline; padding-left: 90px; padding-right: 120px; ">Topic</p>
+                        <p style="display: inline;">Keyword</p>
                     </div>
                     <div style="text-align: center; padding-bottom: 30px;">
                         <div style="display: inline;">
@@ -83,7 +84,9 @@
                                 <option value="allTopics">All</option>
                             </select>
                         </div>
-     
+                        <div style="display: inline;">
+                            <input type="text" placeholder="Keyword" id="keyword_addQuestion"/>
+                        </div>
                     </div>
                     
                     <div style="text-align: center; padding-bottom: 20px;">
@@ -107,10 +110,10 @@
                         <p id="testcase_content4"></p>
                         <p id="testcase_content5"></p>
 
-                        <input style="margin-bottom: 10px; margin-left: 50px; margin-bottom: 40px;" type="button" onclick="add_testcase()" value="Add TestCase" id="add_testcase"/>
+                        <input style="margin-bottom: 10px; margin-left: 50px;" type="button" onclick="add_testcase()" value="Add TestCase" id="add_testcase"/>
                     </div>
                     <div>
-                        <input style="margin-bottom: 100px; margin-left: 50px;text-align: center;" type="button" onclick="add_question();" value="Add Question" id="add_question"/>
+                        <input style="margin-bottom: 100px; margin-left: 250px;" type="button" onclick="add_question();" value="Add Question" id="add_question"/>
                         <p id="add_question_content" style="margin-bottom: 20px;"></p>
                         <p id="add_question_content" style="margin-bottom: 100px;">&nbsp;</p>
                     </div>
@@ -145,7 +148,7 @@
                 
                 
                 //KRYSTAL'S POST.PHP URL IN THE NEXT LINE 
-                xhttp.open("POST","https://web.njit.edu/~jj373/RV/filter.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/filter.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhttp.send("Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic);
 
@@ -182,9 +185,9 @@
                   };
                 
                 
-                xhttp.open("POST","https://web.njit.edu/~jj373/RV/add_questions.php");
+                xhttp.open("POST","https://web.njit.edu/~jj373/RC/add_questions.php");
                 xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                xhttp.send("QText="+QText+"&FuncName="+FuncName+"&Input="+Input+"&Output="+Output+"&Diff="+Diff+"&Topic="+Topic+"&ForLoop="+ForLoop+"&WhileLoop="+WhileLoop+"&Return="+Return+"&Print="+Print);
+                xhttp.send("QText="+QText+"&FuncName="+FuncName+"&Input="+Input+"&Output="+Output+"&Diff="+Diff+"&Keyword="+Keyword+"&Topic="+Topic+"&ForLoop="+ForLoop+"&WhileLoop="+WhileLoop+"&Return="+Return+"&Print="+Print);
             }
         </script>
 <?php 

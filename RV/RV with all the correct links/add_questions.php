@@ -17,7 +17,7 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~mbr23/RC/add_questions_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RV/add_questions_middle.php';
     $post_data = array(
         'QText' => $qtext,
         'FuncName' => $funcname,

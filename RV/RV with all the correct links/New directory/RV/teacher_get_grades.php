@@ -5,7 +5,7 @@
 
     //posting with curl
 
-    $url = 'https://web.njit.edu/~mbr23/RV/teacher_get_grades_middle.php';
+    $url = 'https://web.njit.edu/~mbr23/RC/teacher_get_grades_middle.php';
 //    $post_data = array(
 //        'UCID' => $ucid,
 //        'TestID' => $testid,

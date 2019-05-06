@@ -52,7 +52,7 @@
                     <p style="text-align: center;">Enter Question: </p>
                     <p style="padding-bottom: 10px; text-align:center; padding-top: 0px;"><textarea id="question_addQuestion" class = "codearea" cols="50" rows="8"></textarea></p>
                     
-                    <p style="text-align: center; display: inline; text-align: center;">Function Name: </p><input style="display: inline;" type="text" placeholder="Function Name" id="funcName_addQuestion"/>
+                    <p style="text-align: center; display: inline; padding-left: 200px;">Function Name: </p><input style="display: inline;" type="text" placeholder="Function Name" id="funcName_addQuestion"/>
                     
                     <div style="text-align: center; padding-top: 20px;">
                         <p style="display: inline;">Difficulty</p>
@@ -107,10 +107,10 @@
                         <p id="testcase_content4"></p>
                         <p id="testcase_content5"></p>
 
-                        <input style="margin-bottom: 10px; margin-left: 50px; margin-bottom: 40px;" type="button" onclick="add_testcase()" value="Add TestCase" id="add_testcase"/>
+                        <input style="margin-bottom: 10px; margin-left: 50px;" type="button" onclick="add_testcase()" value="Add TestCase" id="add_testcase"/>
                     </div>
                     <div>
-                        <input style="margin-bottom: 100px; margin-left: 50px;text-align: center;" type="button" onclick="add_question();" value="Add Question" id="add_question"/>
+                        <input style="margin-bottom: 100px; margin-left: 250px;" type="button" onclick="add_question();" value="Add Question" id="add_question"/>
                         <p id="add_question_content" style="margin-bottom: 20px;"></p>
                         <p id="add_question_content" style="margin-bottom: 100px;">&nbsp;</p>
                     </div>
